@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<gpx version="1.1" creator="Leisure maps" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.topografix.com/GPX/1/0">
+  <rte>
+    <name>gpxdata</name>
+    <rtept lat="47.6437253952026" lon="-122.14109992981">
+      <name>0</name>
+      <ele>0</ele>
+    </rtept>
+    <rtept lat="47.6449871203375" lon="-122.142172437275">
+      <name>1</name>
+      <ele>113.5</ele>
+    </rtept>
+    <rtept lat="47.6451188000363" lon="-122.142067076752">
+      <name>2</name>
+      <ele>117.300003051758</ele>
+    </rtept>
+    <rtept lat="47.6449711109024" lon="-122.142249215508">
+      <name>3</name>
+      <ele>125.900001525879</ele>
+    </rtept>
+  </rte>
+</gpx>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17C88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="GpxFileEntity" representedClassName="GpxFileEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="fileParsed" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="path" attributeType="String" syncable="YES"/>
+        <relationship name="routes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GpxRouteEntity" inverseName="file" inverseEntity="GpxRouteEntity" syncable="YES"/>
+        <relationship name="tracks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GpxTrackEntity" inverseName="file" inverseEntity="GpxTrackEntity" syncable="YES"/>
+        <relationship name="waypoints" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GpxWaypointEntity" inverseName="file" inverseEntity="GpxWaypointEntity" syncable="YES"/>
+    </entity>
+    <entity name="GpxRouteEntity" representedClassName="GpxRouteEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="routeDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sequenceNumber" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="file" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GpxFileEntity" inverseName="routes" inverseEntity="GpxFileEntity" syncable="YES"/>
+    </entity>
+    <entity name="GpxTrackEntity" representedClassName="GpxTrackEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sequenceNumber" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="trackDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="file" maxCount="1" deletionRule="Nullify" destinationEntity="GpxFileEntity" inverseName="tracks" inverseEntity="GpxFileEntity" syncable="YES"/>
+    </entity>
+    <entity name="GpxWaypointEntity" representedClassName="GpxWaypointEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="latitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sequenceNumber" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="waypointDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="file" maxCount="1" deletionRule="Nullify" destinationEntity="GpxFileEntity" inverseName="waypoints" inverseEntity="GpxFileEntity" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="GpxFileEntity" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="GpxTrackEntity" positionX="-54" positionY="0" width="128" height="105"/>
+        <element name="GpxWaypointEntity" positionX="-63" positionY="18" width="128" height="135"/>
+        <element name="GpxRouteEntity" positionX="-45" positionY="63" width="128" height="105"/>
+    </elements>
+</model>
