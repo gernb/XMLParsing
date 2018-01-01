@@ -9,16 +9,12 @@
 import CoreLocation
 
 public struct GpxTrack: CustomStringConvertible {
-
-    public typealias BoundsType = (minLat: CLLocationDegrees, minLon: CLLocationDegrees, maxLat: CLLocationDegrees, maxLon: CLLocationDegrees)
-
     public var name: String?
     public var trackDescription: String?
     private (set) public var segments: [GpxTrackSegment]
 
     public class ComputedProperties {
-        fileprivate (set) public var bounds: BoundsType?
-        fileprivate (set) public var center: CLLocationCoordinate2D?
+        fileprivate (set) public var bounds: GpxBounds?
         fileprivate (set) public var duration: TimeInterval?
         fileprivate (set) public var distance: CLLocationDistance?
     }
@@ -84,7 +80,7 @@ public struct GpxTrack: CustomStringConvertible {
     }
 
     public func calculateComputedProperties() {
-        var bounds: BoundsType = (90.0, 180.0, -90.0, -180.0)
+        var bounds: (minLat: CLLocationDegrees, minLon: CLLocationDegrees, maxLat: CLLocationDegrees, maxLon: CLLocationDegrees) = (90.0, 180.0, -90.0, -180.0)
         var duration: TimeInterval = 0
         var distance: CLLocationDistance = 0
 
@@ -111,19 +107,9 @@ public struct GpxTrack: CustomStringConvertible {
             }
         }
 
-        computedProperties.bounds = bounds
+        computedProperties.bounds = GpxBounds(minLatitude: bounds.minLat, minLongitude: bounds.minLon, maxLatitude: bounds.maxLat, maxLongitude: bounds.maxLon)
         computedProperties.duration = duration
         computedProperties.distance = distance
-        computedProperties.center = calculateCenter()
-    }
-
-    private func calculateCenter() -> CLLocationCoordinate2D {
-        guard let bounds = computedProperties.bounds else {
-            fatalError("Bounds have not been calculated yet")
-        }
-        let latitude = bounds.minLat + ((bounds.maxLat - bounds.minLat) / 2)
-        let longitude = bounds.minLon + ((bounds.maxLon - bounds.minLon) / 2)
-        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 
     private struct Constants {

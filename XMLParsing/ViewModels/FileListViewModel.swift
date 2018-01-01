@@ -92,4 +92,25 @@ final class FileLisViewModel {
         }
     }
 
+    func rowProperties(atIndex index: Int) -> (title: String, subtitle: String) {
+        assert(index < files.count && index >= 0)
+        let file = files[index]
+        let title = file.name ?? Defaults.name
+        let subtitle: String
+        if file.fileParsed, let tracks = file.tracks, let routes = file.routes, let waypoints = file.waypoints {
+            subtitle = String.localizedStringWithFormat(Constants.subtitle, tracks.count, routes.count, waypoints.count)
+        }
+        else {
+            subtitle = ""
+        }
+        return (title, subtitle)
+    }
+
+    private struct Defaults {
+        static let name = NSLocalizedString("<Unknown Name>", comment: "Default name of file if not known")
+    }
+
+    private struct Constants {
+        static let subtitle = NSLocalizedString("%1$lu track(s), %2$lu route(s), %3$lu waypoint(s)", comment: "Description of file contents: {Tracks count}, {routes count}, {waypoints count}")
+    }
 }

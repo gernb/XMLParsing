@@ -59,6 +59,7 @@
 		44B080861FF36FB7008C561F /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B080851FF36FB7008C561F /* LoadingView.swift */; };
 		44B080881FF375BB008C561F /* UIView+LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B080871FF375BB008C561F /* UIView+LoadingView.swift */; };
 		44B0808A1FF379D0008C561F /* Thread+RunOnMainThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B080891FF379D0008C561F /* Thread+RunOnMainThread.swift */; };
+		44CBB22C1FF9A40B00A41E7B /* GpxBounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CBB22B1FF9A40B00A41E7B /* GpxBounds.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +129,7 @@
 		44B080851FF36FB7008C561F /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		44B080871FF375BB008C561F /* UIView+LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LoadingView.swift"; sourceTree = "<group>"; };
 		44B080891FF379D0008C561F /* Thread+RunOnMainThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Thread+RunOnMainThread.swift"; sourceTree = "<group>"; };
+		44CBB22B1FF9A40B00A41E7B /* GpxBounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpxBounds.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,6 +279,7 @@
 		44B080771FF31421008C561F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				44CBB22B1FF9A40B00A41E7B /* GpxBounds.swift */,
 				44B0806A1FF1D405008C561F /* GpxFile.swift */,
 				448FA1901FF94B6200E0AB3F /* GpxRoute.swift */,
 				448FA1921FF94F4F00E0AB3F /* GpxRoute+MapKit.swift */,
@@ -485,6 +488,7 @@
 				448FA1911FF94B6200E0AB3F /* GpxRoute.swift in Sources */,
 				448FA17B1FF720FC00E0AB3F /* GpxWaypointEntity+Initialisers.swift in Sources */,
 				448FA1871FF81B5900E0AB3F /* MKMapView+Binding.swift in Sources */,
+				44CBB22C1FF9A40B00A41E7B /* GpxBounds.swift in Sources */,
 				44B0807C1FF31715008C561F /* Model.xcdatamodeld in Sources */,
 				44B0806B1FF1D405008C561F /* GpxFile.swift in Sources */,
 			);

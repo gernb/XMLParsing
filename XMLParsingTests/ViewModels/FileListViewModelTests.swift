@@ -130,6 +130,45 @@ class FileListViewModelTests: XCTestCase {
         XCTAssertFalse(result)
     }
 
+    func testRowProperties() {
+        let mockDelegate = MockDelegate()
+        mockDelegate.exp = expectation(description: "data loaded")
+
+        let file1 = "file1.gpx"
+        try? file1.write(to: testDirectoryUrl.appendingPathComponent(file1), atomically: true, encoding: .utf8)
+        let fileEntity = GpxFileEntity(context: container.viewContext, name: "File 1", filename: file1)
+        fileEntity.fileParsed = true
+        let trackEntity = GpxTrackEntity(context: container.viewContext)
+        trackEntity.sequenceNumber = 1
+        trackEntity.file = fileEntity
+        for i in 1...2 {
+            let routeEntity = GpxRouteEntity(context: container.viewContext)
+            routeEntity.sequenceNumber = Int32(i)
+            routeEntity.file = fileEntity
+        }
+        for i in 1...3 {
+            let waypointEntity = GpxWaypointEntity(context: container.viewContext, latitude: 1.0, longitude: 2.0)
+            waypointEntity.sequenceNumber = Int32(i)
+            waypointEntity.file = fileEntity
+        }
+        let file2 = "file2.gpx"
+        try? file2.write(to: testDirectoryUrl.appendingPathComponent(file2), atomically: true, encoding: .utf8)
+        let _ = GpxFileEntity(context: container.viewContext, name: "File 2", filename: file2)
+
+        let sut = FileLisViewModel(moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
+        sut.loadData()
+        wait(for: [mockDelegate.exp!], timeout: 2.0)
+        XCTAssertEqual(sut.files.count, 2)
+
+        let row0 = sut.rowProperties(atIndex: 0)
+        XCTAssertEqual(row0.title, "File 1")
+        XCTAssertEqual(row0.subtitle, "1 track(s), 2 route(s), 3 waypoint(s)")
+
+        let row1 = sut.rowProperties(atIndex: 1)
+        XCTAssertEqual(row1.title, "File 2")
+        XCTAssertEqual(row1.subtitle, "")
+    }
+
     class MockDelegate: FileLisViewModelDelegate {
         var reloadViewInvoked = false
         var exp: XCTestExpectation?

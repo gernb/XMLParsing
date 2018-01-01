@@ -92,6 +92,20 @@ class TrackListViewController: UIViewController {
         case (_, _, _):
             tabBar.selectedItem = tabBar.items?.filter({ $0.tag == TabBarItemTags.tracks }).first
         }
+        setViewModelView()
+    }
+
+    private func setViewModelView() {
+        switch tabBar.selectedItem!.tag {
+        case TabBarItemTags.tracks:
+            viewModel.viewChanged(to: .tracks)
+        case TabBarItemTags.routes:
+            viewModel.viewChanged(to: .routes)
+        case TabBarItemTags.waypoints:
+            viewModel.viewChanged(to: .waypoints)
+        default:
+            fatalError("Unexpected selected tab bar tag: \(tabBar.selectedItem!.tag)")
+        }
     }
 
     private struct TabBarItemTags {
@@ -128,29 +142,16 @@ extension TrackListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch tabBar.selectedItem!.tag {
-        case TabBarItemTags.tracks:
-            return viewModel.tracks.count
-        case TabBarItemTags.routes:
-            return viewModel.routes.count
-        case TabBarItemTags.waypoints:
-            return viewModel.waypoints.count
-        default:
-            fatalError("Unexpected selected tab bar tag: \(tabBar.selectedItem!.tag)")
-        }
+        return viewModel.numberOfRowsInCurrentView()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellView = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        switch tabBar.selectedItem!.tag {
-        case TabBarItemTags.tracks:
-            cellView.textLabel?.text = viewModel.tracks[indexPath.row].name
-        case TabBarItemTags.routes:
-            cellView.textLabel?.text = viewModel.routes[indexPath.row].name
-        case TabBarItemTags.waypoints:
-            cellView.textLabel?.text = viewModel.waypoints[indexPath.row].name
-        default:
-            fatalError("Unexpected selected tab bar tag: \(tabBar.selectedItem!.tag)")
+        let props = viewModel.rowProperties(atIndex: indexPath.row)
+        cellView.textLabel?.text = props.title
+        // Setting `isSelected` doesn't appear to be "enough". The TableView itself needs to "know" that this row is selected.
+        if props.isSelected {
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
         }
         return cellView
     }
@@ -170,13 +171,25 @@ extension TrackListViewController: UITableViewDelegate {
             fatalError("Unexpected selected tab bar tag: \(tabBar.selectedItem!.tag)")
         }
     }
+
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        switch tabBar.selectedItem!.tag {
+        case TabBarItemTags.tracks:
+            viewModel.deselectTrack(atIndex: indexPath.row)
+        case TabBarItemTags.routes:
+            viewModel.deselectRoute(atIndex: indexPath.row)
+        case TabBarItemTags.waypoints:
+            viewModel.deselectWaypoint(atIndex: indexPath.row)
+        default:
+            fatalError("Unexpected selected tab bar tag: \(tabBar.selectedItem!.tag)")
+        }
+    }
 }
 
 extension TrackListViewController: UITabBarDelegate {
 
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        mapView.removeOverlays(mapView.overlays)
-        mapView.removeAnnotations(mapView.annotations)
+        setViewModelView()
         tableView.reloadData()
     }
 }

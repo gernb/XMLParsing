@@ -52,14 +52,9 @@ extension FileListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellView = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let fileEntity = viewModel.files[indexPath.row]
-        cellView.textLabel?.text = fileEntity.name
-        if let tracks = fileEntity.tracks, let routes = fileEntity.routes, let waypoints = fileEntity.waypoints {
-            cellView.detailTextLabel?.text = "\(tracks.count) track(s), \(routes.count) route(s), \(waypoints.count) waypoint(s)"
-        }
-        else {
-            cellView.detailTextLabel?.text = ""
-        }
+        let props = viewModel.rowProperties(atIndex: indexPath.row)
+        cellView.textLabel?.text = props.title
+        cellView.detailTextLabel?.text = props.subtitle
         return cellView
     }
 

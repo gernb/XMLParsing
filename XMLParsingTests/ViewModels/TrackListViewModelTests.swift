@@ -107,6 +107,44 @@ class TrackListViewModelTests: XCTestCase {
         }
     }
 
+    func testSelectRouteWithFileAlreadyLoaded() {
+        let mockDelegate = MockDelegate()
+        mockDelegate.dataLoadedExp = expectation(description: "loadData invoked")
+        let fileEntity = GpxFileEntity(context: container.viewContext, name: "File Name", filename: "file.gpx")
+        try? TestContent.gpxWithOneRoute.write(to: testDirectoryUrl.appendingPathComponent(fileEntity.path!), atomically: true, encoding: .utf8)
+
+        let sut = TrackListViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
+        sut.loadData()
+        wait(for: [mockDelegate.dataLoadedExp!], timeout: 2.0)
+
+        sut.selectRoute(atIndex: 0)
+
+        XCTAssertTrue(mockDelegate.showMapAreaInvoked)
+        XCTAssertEqual(sut.selectedRoutes.value.count, 1)
+    }
+
+    func testSelectRouteLoadsFile() {
+        let mockDelegate = MockDelegate()
+        let fileEntity = GpxFileEntity(context: container.viewContext, name: "File Name", filename: "file.gpx")
+        fileEntity.fileParsed = true
+        let routeEntity = GpxRouteEntity(context: container.viewContext)
+        routeEntity.name = "Route A"
+        routeEntity.file = fileEntity
+        try? TestContent.gpxWithOneRoute.write(to: testDirectoryUrl.appendingPathComponent(fileEntity.path!), atomically: true, encoding: .utf8)
+
+        let sut = TrackListViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
+        sut.loadData()
+        XCTAssertEqual(sut.routes.count, 1)
+
+        mockDelegate.showMapAreaExp = expectation(description: "showMapArea invoked")
+        sut.selectRoute(atIndex: 0)
+
+        waitForExpectations(timeout: 2.0) { error in
+            XCTAssertNil(error)
+            XCTAssertEqual(sut.selectedRoutes.value.count, 1)
+        }
+    }
+
     func testSelectWaypoint() {
         let mockDelegate = MockDelegate()
         let fileEntity = GpxFileEntity(context: container.viewContext, name: "File Name", filename: "")
@@ -124,6 +162,71 @@ class TrackListViewModelTests: XCTestCase {
         XCTAssertTrue(mockDelegate.showMapAreaInvoked)
         XCTAssertEqual(sut.selectedWaypoints.value.count, 1)
         XCTAssertEqual(sut.selectedWaypoints.value[0].name, wptEntity.name)
+    }
+
+    func testRowProperties() {
+        let mockDelegate = MockDelegate()
+
+        let fileEntity = GpxFileEntity(context: container.viewContext, name: "File Name", filename: "")
+        fileEntity.fileParsed = true
+        for i in 1...3 {
+            let trackEntity = GpxTrackEntity(context: container.viewContext)
+            trackEntity.sequenceNumber = Int32(i)
+            trackEntity.name = "Track #\(i)"
+            trackEntity.file = fileEntity
+        }
+        for i in 1...3 {
+            let routeEntity = GpxRouteEntity(context: container.viewContext)
+            routeEntity.sequenceNumber = Int32(i)
+            routeEntity.name = "Route #\(i)"
+            routeEntity.file = fileEntity
+        }
+        for i in 1...3 {
+            let waypointEntity = GpxWaypointEntity(context: container.viewContext)
+            waypointEntity.sequenceNumber = Int32(i)
+            waypointEntity.name = "Waypoint #\(i)"
+            waypointEntity.file = fileEntity
+        }
+
+        let sut = TrackListViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
+        sut.loadData()
+        XCTAssertEqual(sut.tracks.count, 3)
+        XCTAssertEqual(sut.routes.count, 3)
+        XCTAssertEqual(sut.waypoints.count, 3)
+
+        sut.viewChanged(to: .tracks)
+        var row0 = sut.rowProperties(atIndex: 0)
+        XCTAssertEqual(row0.title, "Track #1")
+        XCTAssertFalse(row0.isSelected)
+        var row1 = sut.rowProperties(atIndex: 1)
+        XCTAssertEqual(row1.title, "Track #2")
+        XCTAssertFalse(row1.isSelected)
+        var row2 = sut.rowProperties(atIndex: 2)
+        XCTAssertEqual(row2.title, "Track #3")
+        XCTAssertFalse(row2.isSelected)
+
+        sut.viewChanged(to: .routes)
+        row0 = sut.rowProperties(atIndex: 0)
+        XCTAssertEqual(row0.title, "Route #1")
+        XCTAssertFalse(row0.isSelected)
+        row1 = sut.rowProperties(atIndex: 1)
+        XCTAssertEqual(row1.title, "Route #2")
+        XCTAssertFalse(row1.isSelected)
+        row2 = sut.rowProperties(atIndex: 2)
+        XCTAssertEqual(row2.title, "Route #3")
+        XCTAssertFalse(row2.isSelected)
+
+        sut.viewChanged(to: .waypoints)
+        sut.selectWaypoint(atIndex: 2)
+        row0 = sut.rowProperties(atIndex: 0)
+        XCTAssertEqual(row0.title, "Waypoint #1")
+        XCTAssertFalse(row0.isSelected)
+        row1 = sut.rowProperties(atIndex: 1)
+        XCTAssertEqual(row1.title, "Waypoint #2")
+        XCTAssertFalse(row1.isSelected)
+        row2 = sut.rowProperties(atIndex: 2)
+        XCTAssertEqual(row2.title, "Waypoint #3")
+        XCTAssertTrue(row2.isSelected)
     }
 
     class MockDelegate: TrackListViewModelDelegate {
@@ -170,6 +273,13 @@ class TrackListViewModelTests: XCTestCase {
                 <name><![CDATA[Track 2]]></name>
                 <desc><![CDATA[Track 2 Description]]></desc>
               </trk>
+            </gpx>
+            """
+        static let gpxWithOneRoute = """
+            <gpx version="1.1">
+              <rte>
+                <name><![CDATA[Route A]]></name>
+              </rte>
             </gpx>
             """
     }
