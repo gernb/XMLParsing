@@ -206,6 +206,11 @@ extension TrackListViewController: MKMapViewDelegate {
         return MKOverlayRenderer(overlay: overlay)
     }
 
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier, for: annotation)
+        annotationView.clusteringIdentifier = "waypoint"
+        return annotationView
+    }
 }
 
 extension TrackListViewController: TrackListViewModelDelegate {

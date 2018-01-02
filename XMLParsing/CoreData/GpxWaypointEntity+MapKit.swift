@@ -17,6 +17,8 @@ extension GpxWaypointEntity {
     var pointAnnotation: MKPointAnnotation {
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
+        annotation.title = name
+        annotation.subtitle = waypointDescription
         return annotation
     }
 }
