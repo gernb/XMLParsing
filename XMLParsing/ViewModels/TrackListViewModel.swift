@@ -283,11 +283,7 @@ final class TrackListViewModel {
     }
 
     private func selectedWaypointsChanged() {
-        var waypointList = [GpxWaypointEntity]()
-        for index in selectedWaypointIndexes {
-            let waypoint = waypoints[index]
-            waypointList.append(waypoint)
-        }
+        let waypointList = selectedWaypointIndexes.map { waypoints[$0] }
 
         Thread.runOnMainThread {
             self.selectedWaypoints.value = waypointList
