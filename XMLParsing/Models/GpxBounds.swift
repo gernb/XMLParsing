@@ -8,7 +8,7 @@
 
 import CoreLocation
 
-public struct GpxBounds: CustomStringConvertible {
+public struct GpxBounds: Codable, CustomStringConvertible {
     public let minLatitude: CLLocationDegrees
     public let minLongitude: CLLocationDegrees
     public let maxLatitude: CLLocationDegrees
@@ -57,5 +57,12 @@ public struct GpxBounds: CustomStringConvertible {
         let maxLat = max(maxLatitude, other.maxLatitude)
         let maxLon = max(maxLongitude, other.maxLongitude)
         return GpxBounds(minLatitude: minLat, minLongitude: minLon, maxLatitude: maxLat, maxLongitude: maxLon)
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case minLatitude = "minLat"
+        case minLongitude = "minLon"
+        case maxLatitude = "maxLat"
+        case maxLongitude = "maxLon"
     }
 }

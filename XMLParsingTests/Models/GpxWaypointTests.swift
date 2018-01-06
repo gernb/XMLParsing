@@ -121,13 +121,13 @@ class GpxWaypointTests: XCTestCase {
     func testInitFromXml2() {
         let date = Date()
         let xmlString = """
-        <wpt lat=\"1.0\" lon=\"2.0\">
-        \t<ele>3.0</ele>
-        \t<time>\(date.iso8601String)</time>
-        \t<name><![CDATA[{name}]]></name>
-        \t<desc><![CDATA[{description}]]></desc>
-        </wpt>
-        """
+            <wpt lat=\"1.0\" lon=\"2.0\">
+            \t<ele>3.0</ele>
+            \t<time>\(date.iso8601String)</time>
+            \t<name><![CDATA[{name}]]></name>
+            \t<desc><![CDATA[{description}]]></desc>
+            </wpt>
+            """
         let xmlNode = try! XMLReader.read(contentsOf: xmlString).nodes.first!
 
         let sut = GpxWaypoint(xml: xmlNode)
@@ -147,11 +147,11 @@ class GpxWaypointTests: XCTestCase {
     func testInitFromXml3() {
         let date = ISO8601DateFormatter().date(from: "2014-09-24T14:55:37Z")!
         let xmlString = """
-        <trkpt lat=\"1.0\" lon=\"2.0\">
-        \t<ele>3.0</ele>
-        \t<time>2014-09-24T14:55:37Z</time>
-        </trkpt>
-        """
+            <trkpt lat=\"1.0\" lon=\"2.0\">
+            \t<ele>3.0</ele>
+            \t<time>2014-09-24T14:55:37Z</time>
+            </trkpt>
+            """
         let xmlNode = try! XMLReader.read(contentsOf: xmlString).nodes.first!
 
         let sut = GpxWaypoint(xml: xmlNode)
@@ -164,4 +164,59 @@ class GpxWaypointTests: XCTestCase {
         XCTAssertTrue(abs(sut!.timestamp!.timeIntervalSince(date)) < 1.0)
     }
 
+    func testEncoding() {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        encoder.dateEncodingStrategy = .iso8601
+        let now = Date()
+        let sut = GpxWaypoint(withNodeName: .waypoint, latitude: 25.123, longitude: -122.321, elevation: 123.321, timestamp: now, name: "Test Waypoint", description: "A test waypoint", symbol: "Test")
+
+        let data = try! encoder.encode(sut)
+        let json = String(data: data, encoding: .utf8)
+
+        XCTAssertNotNil(json)
+        let jsonString = """
+            {
+              "symbol" : "Test",
+              "longitude" : -122.321,
+              "nodeName" : "wpt",
+              "elevation" : 123.321,
+              "latitude" : 25.123000000000001,
+              "description" : "A test waypoint",
+              "timestamp" : "\(Formatter.systemIso8601.string(from: now))",
+              "name" : "Test Waypoint"
+            }
+            """
+        XCTAssertEqual(json, jsonString)
+    }
+
+    func testDecoding() {
+        let now = Date()
+        let jsonString = """
+            {
+                "nodeName":"trkpt",
+                "latitude":25.123,
+                "longitude":-122.321,
+                "elevation":123.321,
+                "timestamp":"\(Formatter.systemIso8601.string(from: now))",
+                "name":"Test Trackpoint",
+                "description":"A test trackpoint"
+            }
+            """
+        let jsonData = jsonString.data(using: .utf8)!
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+
+        let sut = try! decoder.decode(GpxWaypoint.self, from: jsonData)
+
+        XCTAssertEqual(sut.nodeName, .trackpoint)
+        XCTAssertEqual(sut.latitude, 25.123)
+        XCTAssertEqual(sut.longitude, -122.321)
+        XCTAssertEqual(sut.elevationInMetres, 123.321)
+        XCTAssertTrue(abs(sut.timestamp!.timeIntervalSince(now)) < 1.0)
+        XCTAssertEqual(sut.name, "Test Trackpoint")
+        XCTAssertEqual(sut.pointDescription, "A test trackpoint")
+        XCTAssertNil(sut.comment)
+        XCTAssertNil(sut.symbol)
+    }
 }

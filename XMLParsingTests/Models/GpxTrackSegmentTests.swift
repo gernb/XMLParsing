@@ -65,4 +65,44 @@ class GpxTrackSegmentTests: XCTestCase {
         XCTAssertEqual(sut!.points.count, 2)
     }
 
+    func testEncoding() {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        var sut = GpxTrackSegment()
+        sut.add(point: GpxWaypoint(withNodeName: .trackpoint, latitude: 1.0, longitude: 2.0))
+        sut.add(point: GpxWaypoint(withNodeName: .trackpoint, latitude: 1.1, longitude: 2.1))
+
+        let data = try! encoder.encode(sut)
+        let json = String(data: data, encoding: .utf8)
+
+        XCTAssertNotNil(json)
+        let jsonString = """
+            {
+              "points" : [
+                {
+                  "latitude" : 1,
+                  "longitude" : 2,
+                  "nodeName" : "trkpt"
+                },
+                {
+                  "latitude" : 1.1000000000000001,
+                  "longitude" : 2.1000000000000001,
+                  "nodeName" : "trkpt"
+                }
+              ]
+            }
+            """
+        XCTAssertEqual(json, jsonString)
+    }
+
+    func testDecoding() {
+        let jsonString = "{ \"points\":[ { \"latitude\":1, \"longitude\":2, \"nodeName\":\"trkpt\" } ] }"
+        let jsonData = jsonString.data(using: .utf8)!
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+
+        let sut = try! decoder.decode(GpxTrackSegment.self, from: jsonData)
+
+        XCTAssertEqual(sut.points.count, 1)
+    }
 }

@@ -8,12 +8,12 @@
 
 import CoreLocation
 
-public struct GpxRoute: CustomStringConvertible {
+public struct GpxRoute: Codable, CustomStringConvertible {
     public var name: String?
     public var routeDescription: String?
     private (set) var points: [GpxWaypoint]
 
-    public class ComputedProperties {
+    public class ComputedProperties: Codable {
         fileprivate (set) public var bounds: GpxBounds?
         fileprivate (set) public var duration: TimeInterval?
         fileprivate (set) public var distance: CLLocationDistance?
@@ -114,6 +114,13 @@ public struct GpxRoute: CustomStringConvertible {
         computedProperties.distance = distance
     }
 
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case routeDescription = "description"
+        case points
+        case computedProperties
+    }
+
     private struct Constants {
         static let nodeName = "rte"
         static let name = "name"
@@ -121,4 +128,32 @@ public struct GpxRoute: CustomStringConvertible {
         static let pointNodeName = GpxWaypoint.WaypointType.routepoint
     }
 
+}
+
+extension GpxRoute {
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(routeDescription, forKey: .routeDescription)
+        if computedProperties.bounds != nil {
+            try container.encode(computedProperties, forKey: .computedProperties)
+        }
+        try container.encode(points, forKey: .points)
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        let name = try container.decodeIfPresent(String.self, forKey: .name)
+        let description = try container.decodeIfPresent(String.self, forKey: .routeDescription)
+        let computedProperties = try container.decodeIfPresent(ComputedProperties.self, forKey: .computedProperties)
+        let points = try container.decodeIfPresent([GpxWaypoint].self, forKey: .points)
+
+        self.init(name: name, description: description, points: points ?? [])
+        if let computedProperties = computedProperties {
+            self.computedProperties = computedProperties
+        }
+    }
 }

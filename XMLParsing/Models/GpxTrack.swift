@@ -8,12 +8,12 @@
 
 import CoreLocation
 
-public struct GpxTrack: CustomStringConvertible {
+public struct GpxTrack: Codable, CustomStringConvertible {
     public var name: String?
     public var trackDescription: String?
     private (set) public var segments: [GpxTrackSegment]
 
-    public class ComputedProperties {
+    public class ComputedProperties: Codable {
         fileprivate (set) public var bounds: GpxBounds?
         fileprivate (set) public var duration: TimeInterval?
         fileprivate (set) public var distance: CLLocationDistance?
@@ -112,9 +112,44 @@ public struct GpxTrack: CustomStringConvertible {
         computedProperties.distance = distance
     }
 
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case trackDescription = "description"
+        case segments
+        case computedProperties
+    }
+
     private struct Constants {
         static let nodeName = "trk"
         static let name = "name"
         static let description = "desc"
+    }
+}
+
+extension GpxTrack {
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(trackDescription, forKey: .trackDescription)
+        if computedProperties.bounds != nil {
+            try container.encode(computedProperties, forKey: .computedProperties)
+        }
+        try container.encode(segments, forKey: .segments)
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        let name = try container.decodeIfPresent(String.self, forKey: .name)
+        let description = try container.decodeIfPresent(String.self, forKey: .trackDescription)
+        let computedProperties = try container.decodeIfPresent(ComputedProperties.self, forKey: .computedProperties)
+        let segments = try container.decodeIfPresent([GpxTrackSegment].self, forKey: .segments)
+
+        self.init(name: name, description: description, segments: segments ?? [])
+        if let computedProperties = computedProperties {
+            self.computedProperties = computedProperties
+        }
     }
 }

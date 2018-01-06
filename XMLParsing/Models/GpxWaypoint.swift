@@ -8,8 +8,8 @@
 
 import Foundation
 
-public struct GpxWaypoint: CustomStringConvertible {
-    public enum WaypointType: String {
+public struct GpxWaypoint: Codable, CustomStringConvertible {
+    public enum WaypointType: String, Codable {
         case waypoint = "wpt"
         case trackpoint = "trkpt"
         case routepoint = "rtept"
@@ -133,6 +133,18 @@ public struct GpxWaypoint: CustomStringConvertible {
                   symbol: symbol)
     }
 
+    private enum CodingKeys: String, CodingKey {
+        case nodeName
+        case latitude
+        case longitude
+        case elevationInMetres = "elevation"
+        case timestamp
+        case name
+        case comment
+        case pointDescription = "description"
+        case symbol
+    }
+
     private struct Constants {
         static let latitude = "lat"
         static let longitude = "lon"
@@ -144,4 +156,3 @@ public struct GpxWaypoint: CustomStringConvertible {
         static let symbol = "sym"
     }
 }
-

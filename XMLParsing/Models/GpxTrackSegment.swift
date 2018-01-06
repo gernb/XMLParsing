@@ -6,7 +6,7 @@
 //  Copyright © 2017 Peter Bohac. All rights reserved.
 //
 
-public struct GpxTrackSegment: CustomStringConvertible {
+public struct GpxTrackSegment: Codable, CustomStringConvertible {
     private (set) var points: [GpxWaypoint]
 
     public var xml: XMLNode {
