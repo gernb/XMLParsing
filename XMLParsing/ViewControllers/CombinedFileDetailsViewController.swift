@@ -1,5 +1,5 @@
 //
-//  TrackListViewController.swift
+//  CombinedFileDetailsViewController.swift
 //  XMLParsing
 //
 //  Created by Peter Bohac on 12/26/17.
@@ -9,18 +9,18 @@
 import UIKit
 import MapKit
 
-class TrackListViewController: UIViewController {
+class CombinedFileDetailsViewController: UIViewController {
     @IBOutlet private var mapView: MKMapView!
     @IBOutlet private var mapTypeButton: PickerButton!
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var tabBar: UITabBar!
 
-    private var viewModel: TrackListViewModel!
+    private var viewModel: CombinedFileDetailsViewModel!
     private let mapPickerHelper = MapPickerHelper()
 
-    static func create(withFile file: GpxFileEntity) -> TrackListViewController {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TrackListViewController") as! TrackListViewController
-        vc.viewModel = TrackListViewModel(file: file, moc: AppDelegate.shared.coreDataContainer.viewContext, delegate: vc)
+    static func create(withFile file: GpxFileEntity) -> CombinedFileDetailsViewController {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CombinedFileDetailsViewController") as! CombinedFileDetailsViewController
+        vc.viewModel = CombinedFileDetailsViewModel(file: file, moc: AppDelegate.shared.coreDataContainer.viewContext, delegate: vc)
         return vc
     }
 
@@ -135,7 +135,7 @@ class TrackListViewController: UIViewController {
     }
 }
 
-extension TrackListViewController: UITableViewDataSource {
+extension CombinedFileDetailsViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -157,7 +157,7 @@ extension TrackListViewController: UITableViewDataSource {
     }
 }
 
-extension TrackListViewController: UITableViewDelegate {
+extension CombinedFileDetailsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tabBar.selectedItem!.tag {
@@ -186,7 +186,7 @@ extension TrackListViewController: UITableViewDelegate {
     }
 }
 
-extension TrackListViewController: UITabBarDelegate {
+extension CombinedFileDetailsViewController: UITabBarDelegate {
 
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         setViewModelView()
@@ -194,7 +194,7 @@ extension TrackListViewController: UITabBarDelegate {
     }
 }
 
-extension TrackListViewController: MKMapViewDelegate {
+extension CombinedFileDetailsViewController: MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKPolyline {
@@ -213,7 +213,7 @@ extension TrackListViewController: MKMapViewDelegate {
     }
 }
 
-extension TrackListViewController: TrackListViewModelDelegate {
+extension CombinedFileDetailsViewController: CombinedFileDetailsViewModelDelegate {
 
     func reloadView() {
         setSelectedTab()

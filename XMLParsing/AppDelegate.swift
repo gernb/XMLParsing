@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let fileEntity = GpxFileEntity(context: coreDataContainer.viewContext, name: url.deletingPathExtension().lastPathComponent, filename: fileUrl.lastPathComponent)
         try? coreDataContainer.viewContext.save()
 
-        let vc = TrackListViewController.create(withFile: fileEntity)
+        let vc = CombinedFileDetailsViewController.create(withFile: fileEntity)
         navController.pushViewController(vc, animated: true)
         return true
     }

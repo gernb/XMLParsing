@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="88" width="375" height="690"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="bMm-Qy-Xnx" detailTextLabel="4DC-JV-aaZ" style="IBUITableViewCellStyleSubtitle" id="HnC-eW-TDm">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="bMm-Qy-Xnx" detailTextLabel="4DC-JV-aaZ" style="IBUITableViewCellStyleSubtitle" id="HnC-eW-TDm">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HnC-eW-TDm" id="LJB-1b-ElK">
@@ -68,10 +68,10 @@
             </objects>
             <point key="canvasLocation" x="475" y="799"/>
         </scene>
-        <!--Track List View Controller-->
+        <!--Combined File Details View Controller-->
         <scene sceneID="Wi8-es-kUV">
             <objects>
-                <viewController storyboardIdentifier="TrackListViewController" id="PSM-QQ-dva" customClass="TrackListViewController" customModule="XMLParsing" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CombinedFileDetailsViewController" id="PSM-QQ-dva" customClass="CombinedFileDetailsViewController" customModule="XMLParsing" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ffV-c0-Trn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -90,7 +90,7 @@
                                 <rect key="frame" x="0.0" y="411" width="375" height="317"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="3fF-2D-hX8" style="IBUITableViewCellStyleDefault" id="t8G-g7-4vD">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="3fF-2D-hX8" style="IBUITableViewCellStyleDefault" id="t8G-g7-4vD">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t8G-g7-4vD" id="rPx-TY-75R">
@@ -151,19 +151,24 @@
                         <viewLayoutGuide key="safeArea" id="pW2-V1-WbE"/>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="Etn-Xq-cjq"/>
+                                <exclude reference="Ie6-9A-20S"/>
+                                <exclude reference="pwi-6w-ncj"/>
                                 <exclude reference="E15-tj-tHo"/>
                                 <exclude reference="gkR-3K-MKH"/>
                                 <exclude reference="nP7-14-iAf"/>
                                 <exclude reference="bFW-af-g3H"/>
-                                <exclude reference="Etn-Xq-cjq"/>
-                                <exclude reference="Ie6-9A-20S"/>
-                                <exclude reference="pwi-6w-ncj"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=compact">
                             <mask key="constraints">
                                 <exclude reference="Exi-CT-NgF"/>
                                 <exclude reference="Q2h-hC-H5b"/>
+                                <include reference="Etn-Xq-cjq"/>
+                                <exclude reference="G78-yN-Z8z"/>
+                                <include reference="Ie6-9A-20S"/>
+                                <exclude reference="SUd-k9-0v7"/>
+                                <include reference="pwi-6w-ncj"/>
                                 <include reference="E15-tj-tHo"/>
                                 <exclude reference="XTh-Uf-ulA"/>
                                 <exclude reference="f3m-v3-zvX"/>
@@ -171,11 +176,6 @@
                                 <include reference="nP7-14-iAf"/>
                                 <exclude reference="rJW-nf-cwo"/>
                                 <include reference="bFW-af-g3H"/>
-                                <include reference="Etn-Xq-cjq"/>
-                                <exclude reference="G78-yN-Z8z"/>
-                                <include reference="Ie6-9A-20S"/>
-                                <exclude reference="SUd-k9-0v7"/>
-                                <include reference="pwi-6w-ncj"/>
                             </mask>
                         </variation>
                     </view>

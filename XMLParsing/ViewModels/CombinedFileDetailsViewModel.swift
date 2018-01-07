@@ -1,5 +1,5 @@
 //
-//  TrackListViewModel.swift
+//  CombinedFileDetailsViewModel.swift
 //  XMLParsing
 //
 //  Created by Peter Bohac on 12/28/17.
@@ -10,13 +10,13 @@ import CoreData
 import CoreLocation
 import Foundation
 
-protocol TrackListViewModelDelegate: class {
+protocol CombinedFileDetailsViewModelDelegate: class {
     func reloadView()
     func showMapArea(center: CLLocationCoordinate2D, latitudeDelta: CLLocationDegrees, longitudeDelta: CLLocationDegrees)
     func showMapArea(center: CLLocationCoordinate2D, latitudinalMeters: CLLocationDistance, longitudinalMeters: CLLocationDistance)
 }
 
-final class TrackListViewModel {
+final class CombinedFileDetailsViewModel {
 
     enum ViewType {
         case tracks, routes, waypoints
@@ -34,7 +34,7 @@ final class TrackListViewModel {
     private let fileEntity: GpxFileEntity
     private let moc: NSManagedObjectContext
     private let directoryUrl: URL
-    private weak var delegate: TrackListViewModelDelegate?
+    private weak var delegate: CombinedFileDetailsViewModelDelegate?
 
     private var selectedTrackIndexes = Set<Int>()
     private var selectedRouteIndexes = Set<Int>()
@@ -43,7 +43,7 @@ final class TrackListViewModel {
     private var currentView = ViewType.tracks
     private var gpxFile: GpxFile?
 
-    init(file: GpxFileEntity, moc: NSManagedObjectContext, delegate: TrackListViewModelDelegate, directoryUrl: URL = FileUtils.documentDirectoryUrl) {
+    init(file: GpxFileEntity, moc: NSManagedObjectContext, delegate: CombinedFileDetailsViewModelDelegate, directoryUrl: URL = FileUtils.documentDirectoryUrl) {
         self.fileEntity = file
         self.moc = moc
         self.delegate = delegate

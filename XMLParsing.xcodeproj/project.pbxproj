@@ -16,8 +16,8 @@
 		448FA1631FF56CF500E0AB3F /* UILabel+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448FA1621FF56CF500E0AB3F /* UILabel+Binding.swift */; };
 		448FA1651FF56D4C00E0AB3F /* UIViewController+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448FA1641FF56D4C00E0AB3F /* UIViewController+Binding.swift */; };
 		448FA1681FF574D100E0AB3F /* FileListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448FA1671FF574D100E0AB3F /* FileListViewModelTests.swift */; };
-		448FA16B1FF5FEEF00E0AB3F /* TrackListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448FA16A1FF5FEEF00E0AB3F /* TrackListViewModel.swift */; };
-		448FA16D1FF609CE00E0AB3F /* TrackListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448FA16C1FF609CE00E0AB3F /* TrackListViewModelTests.swift */; };
+		448FA16B1FF5FEEF00E0AB3F /* CombinedFileDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448FA16A1FF5FEEF00E0AB3F /* CombinedFileDetailsViewModel.swift */; };
+		448FA16D1FF609CE00E0AB3F /* CombinedFileDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448FA16C1FF609CE00E0AB3F /* CombinedFileDetailsViewModelTests.swift */; };
 		448FA16F1FF6AFC100E0AB3F /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448FA16E1FF6AFC100E0AB3F /* TestUtils.swift */; };
 		448FA1711FF6BB5000E0AB3F /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448FA1701FF6BB5000E0AB3F /* Result.swift */; };
 		448FA1731FF6BD8600E0AB3F /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448FA1721FF6BD8600E0AB3F /* Logger.swift */; };
@@ -55,7 +55,7 @@
 		44B0807E1FF325AB008C561F /* CoreDataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B0807D1FF325AB008C561F /* CoreDataUtils.swift */; };
 		44B080801FF343C9008C561F /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B0807F1FF343C9008C561F /* FileUtils.swift */; };
 		44B080821FF34F6E008C561F /* FileListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B080811FF34F6E008C561F /* FileListViewController.swift */; };
-		44B080841FF359C1008C561F /* TrackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B080831FF359C1008C561F /* TrackListViewController.swift */; };
+		44B080841FF359C1008C561F /* CombinedFileDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B080831FF359C1008C561F /* CombinedFileDetailsViewController.swift */; };
 		44B080861FF36FB7008C561F /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B080851FF36FB7008C561F /* LoadingView.swift */; };
 		44B080881FF375BB008C561F /* UIView+LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B080871FF375BB008C561F /* UIView+LoadingView.swift */; };
 		44B0808A1FF379D0008C561F /* Thread+RunOnMainThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B080891FF379D0008C561F /* Thread+RunOnMainThread.swift */; };
@@ -84,8 +84,8 @@
 		448FA1621FF56CF500E0AB3F /* UILabel+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Binding.swift"; sourceTree = "<group>"; };
 		448FA1641FF56D4C00E0AB3F /* UIViewController+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Binding.swift"; sourceTree = "<group>"; };
 		448FA1671FF574D100E0AB3F /* FileListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileListViewModelTests.swift; sourceTree = "<group>"; };
-		448FA16A1FF5FEEF00E0AB3F /* TrackListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackListViewModel.swift; sourceTree = "<group>"; };
-		448FA16C1FF609CE00E0AB3F /* TrackListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackListViewModelTests.swift; sourceTree = "<group>"; };
+		448FA16A1FF5FEEF00E0AB3F /* CombinedFileDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinedFileDetailsViewModel.swift; sourceTree = "<group>"; };
+		448FA16C1FF609CE00E0AB3F /* CombinedFileDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinedFileDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		448FA16E1FF6AFC100E0AB3F /* TestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		448FA1701FF6BB5000E0AB3F /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		448FA1721FF6BD8600E0AB3F /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -125,7 +125,7 @@
 		44B0807D1FF325AB008C561F /* CoreDataUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataUtils.swift; sourceTree = "<group>"; };
 		44B0807F1FF343C9008C561F /* FileUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		44B080811FF34F6E008C561F /* FileListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileListViewController.swift; sourceTree = "<group>"; };
-		44B080831FF359C1008C561F /* TrackListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackListViewController.swift; sourceTree = "<group>"; };
+		44B080831FF359C1008C561F /* CombinedFileDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinedFileDetailsViewController.swift; sourceTree = "<group>"; };
 		44B080851FF36FB7008C561F /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		44B080871FF375BB008C561F /* UIView+LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LoadingView.swift"; sourceTree = "<group>"; };
 		44B080891FF379D0008C561F /* Thread+RunOnMainThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Thread+RunOnMainThread.swift"; sourceTree = "<group>"; };
@@ -175,8 +175,8 @@
 		448FA15A1FF5698800E0AB3F /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				448FA16A1FF5FEEF00E0AB3F /* CombinedFileDetailsViewModel.swift */,
 				448FA15B1FF569F000E0AB3F /* FileListViewModel.swift */,
-				448FA16A1FF5FEEF00E0AB3F /* TrackListViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -196,8 +196,8 @@
 		448FA1661FF573B800E0AB3F /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				448FA16C1FF609CE00E0AB3F /* CombinedFileDetailsViewModelTests.swift */,
 				448FA1671FF574D100E0AB3F /* FileListViewModelTests.swift */,
-				448FA16C1FF609CE00E0AB3F /* TrackListViewModelTests.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -205,8 +205,8 @@
 		448FA1691FF5840100E0AB3F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				44B080831FF359C1008C561F /* CombinedFileDetailsViewController.swift */,
 				44B080811FF34F6E008C561F /* FileListViewController.swift */,
-				44B080831FF359C1008C561F /* TrackListViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -439,7 +439,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				448FA16D1FF609CE00E0AB3F /* TrackListViewModelTests.swift in Sources */,
+				448FA16D1FF609CE00E0AB3F /* CombinedFileDetailsViewModelTests.swift in Sources */,
 				448FA16F1FF6AFC100E0AB3F /* TestUtils.swift in Sources */,
 				448FA1551FF47E1200E0AB3F /* GpxWaypointTests.swift in Sources */,
 				448FA1571FF4967A00E0AB3F /* GpxTrackSegmentTests.swift in Sources */,
@@ -477,8 +477,8 @@
 				448FA1611FF56CB800E0AB3F /* UIView+Binding.swift in Sources */,
 				44B0805D1FF17034008C561F /* XMLReader.swift in Sources */,
 				448FA15C1FF569F000E0AB3F /* FileListViewModel.swift in Sources */,
-				44B080841FF359C1008C561F /* TrackListViewController.swift in Sources */,
-				448FA16B1FF5FEEF00E0AB3F /* TrackListViewModel.swift in Sources */,
+				44B080841FF359C1008C561F /* CombinedFileDetailsViewController.swift in Sources */,
+				448FA16B1FF5FEEF00E0AB3F /* CombinedFileDetailsViewModel.swift in Sources */,
 				448FA18D1FF844C900E0AB3F /* MKCoordinateRegion+MapRect.swift in Sources */,
 				44B080821FF34F6E008C561F /* FileListViewController.swift in Sources */,
 				44B080631FF1CA5D008C561F /* ISO8601.swift in Sources */,

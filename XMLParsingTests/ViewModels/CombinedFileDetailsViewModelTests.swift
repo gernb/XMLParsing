@@ -1,5 +1,5 @@
 //
-//  TrackListViewModelTests.swift
+//  CombinedFileDetailsViewModelTests.swift
 //  XMLParsingTests
 //
 //  Created by Peter Bohac on 12/28/17.
@@ -11,7 +11,7 @@ import CoreLocation
 import XCTest
 @testable import XMLParsing
 
-class TrackListViewModelTests: XCTestCase {
+class CombinedFileDetailsViewModelTests: XCTestCase {
 
     var container: NSPersistentContainer!
     let testDirectoryUrl = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
@@ -41,7 +41,7 @@ class TrackListViewModelTests: XCTestCase {
         trackEntity.name = "Track Name"
         trackEntity.file = fileEntity
 
-        let sut = TrackListViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
+        let sut = CombinedFileDetailsViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
         sut.loadData()
 
         XCTAssertEqual(sut.title.value, "File Name")
@@ -56,7 +56,7 @@ class TrackListViewModelTests: XCTestCase {
         let fileEntity = GpxFileEntity(context: container.viewContext, name: "File Name", filename: "file.gpx")
         try? TestContent.gpxWithTwoTracks.write(to: testDirectoryUrl.appendingPathComponent(fileEntity.path!), atomically: true, encoding: .utf8)
 
-        let sut = TrackListViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
+        let sut = CombinedFileDetailsViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
         sut.loadData()
 
         waitForExpectations(timeout: 2.0) { error in
@@ -75,7 +75,7 @@ class TrackListViewModelTests: XCTestCase {
         let fileEntity = GpxFileEntity(context: container.viewContext, name: "File Name", filename: "file.gpx")
         try? TestContent.gpxWithOneTrack.write(to: testDirectoryUrl.appendingPathComponent(fileEntity.path!), atomically: true, encoding: .utf8)
 
-        let sut = TrackListViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
+        let sut = CombinedFileDetailsViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
         sut.loadData()
         wait(for: [mockDelegate.dataLoadedExp!], timeout: 2.0)
 
@@ -94,7 +94,7 @@ class TrackListViewModelTests: XCTestCase {
         trackEntity.file = fileEntity
         try? TestContent.gpxWithOneTrack.write(to: testDirectoryUrl.appendingPathComponent(fileEntity.path!), atomically: true, encoding: .utf8)
 
-        let sut = TrackListViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
+        let sut = CombinedFileDetailsViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
         sut.loadData()
         XCTAssertEqual(sut.tracks.count, 1)
 
@@ -113,7 +113,7 @@ class TrackListViewModelTests: XCTestCase {
         let fileEntity = GpxFileEntity(context: container.viewContext, name: "File Name", filename: "file.gpx")
         try? TestContent.gpxWithOneRoute.write(to: testDirectoryUrl.appendingPathComponent(fileEntity.path!), atomically: true, encoding: .utf8)
 
-        let sut = TrackListViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
+        let sut = CombinedFileDetailsViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
         sut.loadData()
         wait(for: [mockDelegate.dataLoadedExp!], timeout: 2.0)
 
@@ -132,7 +132,7 @@ class TrackListViewModelTests: XCTestCase {
         routeEntity.file = fileEntity
         try? TestContent.gpxWithOneRoute.write(to: testDirectoryUrl.appendingPathComponent(fileEntity.path!), atomically: true, encoding: .utf8)
 
-        let sut = TrackListViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
+        let sut = CombinedFileDetailsViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
         sut.loadData()
         XCTAssertEqual(sut.routes.count, 1)
 
@@ -153,7 +153,7 @@ class TrackListViewModelTests: XCTestCase {
         wptEntity.name = "Waypoint Name"
         wptEntity.file = fileEntity
 
-        let sut = TrackListViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
+        let sut = CombinedFileDetailsViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
         sut.loadData()
         XCTAssertEqual(sut.waypoints.count, 1)
 
@@ -188,7 +188,7 @@ class TrackListViewModelTests: XCTestCase {
             waypointEntity.file = fileEntity
         }
 
-        let sut = TrackListViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
+        let sut = CombinedFileDetailsViewModel(file: fileEntity, moc: container.viewContext, delegate: mockDelegate, directoryUrl: testDirectoryUrl)
         sut.loadData()
         XCTAssertEqual(sut.tracks.count, 3)
         XCTAssertEqual(sut.routes.count, 3)
@@ -229,7 +229,7 @@ class TrackListViewModelTests: XCTestCase {
         XCTAssertTrue(row2.isSelected)
     }
 
-    class MockDelegate: TrackListViewModelDelegate {
+    class MockDelegate: CombinedFileDetailsViewModelDelegate {
         var reloadViewInvoked = false
         var showMapAreaInvoked = false
         var dataLoadedExp: XCTestExpectation?
