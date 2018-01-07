@@ -113,26 +113,6 @@ class CombinedFileDetailsViewController: UIViewController {
         static let routes = 2
         static let waypoints = 3
     }
-
-    private class MapPickerHelper: NSObject, UIPickerViewDataSource, UIPickerViewDelegate {
-        var rowSelected: ((MKMapType) -> Void)?
-
-        func numberOfComponents(in pickerView: UIPickerView) -> Int {
-            return 1
-        }
-
-        func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-            return MKMapType.all.count
-        }
-
-        func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-            return MKMapType.all[row].description
-        }
-
-        func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-            rowSelected?(MKMapType.all[row])
-        }
-    }
 }
 
 extension CombinedFileDetailsViewController: UITableViewDataSource {

@@ -194,9 +194,9 @@ final class CombinedFileDetailsViewModel {
     // MARK: - Private functions
 
     private func updateLists() {
-        tracks = (fileEntity.tracks!.allObjects as! [GpxTrackEntity]).sorted(by: { $0.sequenceNumber < $1.sequenceNumber })
-        routes = (fileEntity.routes!.allObjects as! [GpxRouteEntity]).sorted(by: { $0.sequenceNumber < $1.sequenceNumber })
-        waypoints = (fileEntity.waypoints!.allObjects as! [GpxWaypointEntity]).sorted(by: { $0.sequenceNumber < $1.sequenceNumber })
+        tracks = fileEntity.sortedTracks
+        routes = fileEntity.sortedRoutes
+        waypoints = fileEntity.sortedWaypoints
     }
 
     private func parseGpxFile() {

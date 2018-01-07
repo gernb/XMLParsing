@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="88" width="375" height="690"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="bMm-Qy-Xnx" detailTextLabel="4DC-JV-aaZ" style="IBUITableViewCellStyleSubtitle" id="HnC-eW-TDm">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="bMm-Qy-Xnx" detailTextLabel="4DC-JV-aaZ" style="IBUITableViewCellStyleSubtitle" id="HnC-eW-TDm">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HnC-eW-TDm" id="LJB-1b-ElK">
@@ -68,6 +68,184 @@
             </objects>
             <point key="canvasLocation" x="475" y="799"/>
         </scene>
+        <!--File Details View Controller-->
+        <scene sceneID="i62-Iy-Hiu">
+            <objects>
+                <viewController storyboardIdentifier="FileDetailsViewController" id="KSQ-W2-ChE" customClass="FileDetailsViewController" customModule="XMLParsing" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TnP-c9-E6Z">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsScale="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LbD-oh-E0v">
+                                <rect key="frame" x="0.0" y="44" width="375" height="367"/>
+                            </mapView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NAH-rk-RmH">
+                                <rect key="frame" x="0.0" y="411" width="375" height="317"/>
+                                <connections>
+                                    <segue destination="WJI-9c-6uD" kind="embed" identifier="embedSegue" id="fK1-Tk-0kd"/>
+                                </connections>
+                            </containerView>
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="et9-w6-lA5">
+                                <rect key="frame" x="0.0" y="728" width="375" height="49"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <items>
+                                    <tabBarItem tag="1" title="All" id="eNe-4f-SRD">
+                                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-16"/>
+                                    </tabBarItem>
+                                    <tabBarItem tag="2" title="Tracks" id="AS5-vp-7rI">
+                                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-16"/>
+                                    </tabBarItem>
+                                    <tabBarItem tag="3" title="Routes" id="u3V-ua-Vr9">
+                                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-16"/>
+                                    </tabBarItem>
+                                    <tabBarItem tag="4" title="Waypoints" id="HbF-Tj-wir">
+                                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-16"/>
+                                    </tabBarItem>
+                                </items>
+                            </tabBar>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Road" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dzV-0F-2o6" customClass="PickerButton" customModule="XMLParsing" customModuleProvider="target">
+                                <rect key="frame" x="288" y="361" width="67" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="NAH-rk-RmH" firstAttribute="top" secondItem="1Vp-qn-wXZ" secondAttribute="centerY" id="6fa-d0-Ghd"/>
+                            <constraint firstItem="dzV-0F-2o6" firstAttribute="bottom" secondItem="LbD-oh-E0v" secondAttribute="bottom" constant="-20" id="7JW-8V-FJQ"/>
+                            <constraint firstItem="LbD-oh-E0v" firstAttribute="leading" secondItem="1Vp-qn-wXZ" secondAttribute="leading" id="F0H-OV-KyX"/>
+                            <constraint firstItem="et9-w6-lA5" firstAttribute="bottom" secondItem="1Vp-qn-wXZ" secondAttribute="bottom" constant="-1" id="Gkn-vP-j9w"/>
+                            <constraint firstItem="LbD-oh-E0v" firstAttribute="leading" secondItem="NAH-rk-RmH" secondAttribute="trailing" id="Lex-Hd-fP6"/>
+                            <constraint firstItem="dzV-0F-2o6" firstAttribute="trailing" secondItem="LbD-oh-E0v" secondAttribute="trailing" constant="-20" id="Tbm-D2-Ogj"/>
+                            <constraint firstItem="et9-w6-lA5" firstAttribute="top" secondItem="LbD-oh-E0v" secondAttribute="bottom" id="VUq-sk-8e0"/>
+                            <constraint firstItem="LbD-oh-E0v" firstAttribute="trailing" secondItem="1Vp-qn-wXZ" secondAttribute="trailing" id="XUJ-KL-x8A"/>
+                            <constraint firstItem="LbD-oh-E0v" firstAttribute="top" secondItem="1Vp-qn-wXZ" secondAttribute="top" id="XVf-fI-dfs"/>
+                            <constraint firstItem="et9-w6-lA5" firstAttribute="top" secondItem="NAH-rk-RmH" secondAttribute="bottom" id="ZJE-8u-QAn"/>
+                            <constraint firstItem="1Vp-qn-wXZ" firstAttribute="centerY" secondItem="LbD-oh-E0v" secondAttribute="bottom" id="Zo8-yd-yFA"/>
+                            <constraint firstItem="LbD-oh-E0v" firstAttribute="trailing" secondItem="1Vp-qn-wXZ" secondAttribute="trailing" id="apZ-Vd-MBS"/>
+                            <constraint firstItem="et9-w6-lA5" firstAttribute="top" secondItem="NAH-rk-RmH" secondAttribute="bottom" id="b73-Cf-JV7"/>
+                            <constraint firstItem="et9-w6-lA5" firstAttribute="trailing" secondItem="1Vp-qn-wXZ" secondAttribute="trailing" id="doe-41-K4u"/>
+                            <constraint firstItem="NAH-rk-RmH" firstAttribute="top" secondItem="1Vp-qn-wXZ" secondAttribute="top" id="l7H-FD-lzJ"/>
+                            <constraint firstItem="et9-w6-lA5" firstAttribute="leading" secondItem="1Vp-qn-wXZ" secondAttribute="leading" id="qDI-dj-7ey"/>
+                            <constraint firstItem="1Vp-qn-wXZ" firstAttribute="centerX" secondItem="NAH-rk-RmH" secondAttribute="trailing" id="qwL-ce-zon"/>
+                            <constraint firstItem="NAH-rk-RmH" firstAttribute="leading" secondItem="1Vp-qn-wXZ" secondAttribute="leading" id="r0K-eV-TYZ"/>
+                            <constraint firstItem="1Vp-qn-wXZ" firstAttribute="trailing" secondItem="NAH-rk-RmH" secondAttribute="trailing" id="scJ-uL-YhP"/>
+                            <constraint firstItem="NAH-rk-RmH" firstAttribute="leading" secondItem="1Vp-qn-wXZ" secondAttribute="leading" id="vgP-Mx-Sz6"/>
+                            <constraint firstItem="LbD-oh-E0v" firstAttribute="top" secondItem="1Vp-qn-wXZ" secondAttribute="top" id="zRj-a1-cPk"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="1Vp-qn-wXZ"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="qwL-ce-zon"/>
+                                <exclude reference="l7H-FD-lzJ"/>
+                                <exclude reference="r0K-eV-TYZ"/>
+                                <exclude reference="VUq-sk-8e0"/>
+                                <exclude reference="ZJE-8u-QAn"/>
+                                <exclude reference="Lex-Hd-fP6"/>
+                                <exclude reference="XUJ-KL-x8A"/>
+                                <exclude reference="XVf-fI-dfs"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact-widthClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="Zo8-yd-yFA"/>
+                                <include reference="qwL-ce-zon"/>
+                                <exclude reference="scJ-uL-YhP"/>
+                                <exclude reference="6fa-d0-Ghd"/>
+                                <include reference="l7H-FD-lzJ"/>
+                                <include reference="r0K-eV-TYZ"/>
+                                <exclude reference="vgP-Mx-Sz6"/>
+                                <include reference="VUq-sk-8e0"/>
+                                <include reference="ZJE-8u-QAn"/>
+                                <exclude reference="b73-Cf-JV7"/>
+                                <exclude reference="F0H-OV-KyX"/>
+                                <include reference="Lex-Hd-fP6"/>
+                                <include reference="XUJ-KL-x8A"/>
+                                <include reference="XVf-fI-dfs"/>
+                                <exclude reference="apZ-Vd-MBS"/>
+                                <exclude reference="zRj-a1-cPk"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="mapTypeButton" destination="dzV-0F-2o6" id="hjJ-ct-Lqx"/>
+                        <outlet property="mapView" destination="LbD-oh-E0v" id="9V9-YR-wNG"/>
+                        <outlet property="tabBar" destination="et9-w6-lA5" id="dVC-8z-pnQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FfM-ba-KE7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1392.1182266009853" y="108"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="Eb9-ps-Qzy">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="WJI-9c-6uD" customClass="PageViewController" customModule="XMLParsing" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Wj-DY-gbd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2273" y="208"/>
+        </scene>
+        <!--All List View Controller-->
+        <scene sceneID="oLL-Gb-SYw">
+            <objects>
+                <viewController storyboardIdentifier="AllListViewController" id="DQI-6o-gHa" customClass="AllListViewController" customModule="XMLParsing" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jc7-t6-GTH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <viewLayoutGuide key="safeArea" id="qjv-s2-ays"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jdG-Ro-Gg2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3009" y="112"/>
+        </scene>
+        <!--Tracks List View Controller-->
+        <scene sceneID="NcR-7Y-sEj">
+            <objects>
+                <viewController storyboardIdentifier="TracksListViewController" id="ws7-mo-fid" customClass="TracksListViewController" customModule="XMLParsing" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nOA-0e-Eu1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <viewLayoutGuide key="safeArea" id="Ifg-2w-4Zt"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="z1U-Mh-8Ri" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3719" y="109"/>
+        </scene>
+        <!--Routes List View Controller-->
+        <scene sceneID="yPr-op-cLM">
+            <objects>
+                <viewController storyboardIdentifier="RoutesListViewController" id="4yW-E7-Baz" customClass="RoutesListViewController" customModule="XMLParsing" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="V2h-iK-Mlz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <viewLayoutGuide key="safeArea" id="jDO-hG-2GY"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ree-hJ-Rkg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4410" y="110"/>
+        </scene>
+        <!--Waypoints List View Controller-->
+        <scene sceneID="ODo-LD-GE9">
+            <objects>
+                <viewController storyboardIdentifier="WaypointsListViewController" id="siH-M3-7y7" customClass="WaypointsListViewController" customModule="XMLParsing" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GbE-Cz-EAM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="0.98234318617150029" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="p5N-qR-Zuv"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TTO-vA-mdo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5142" y="110"/>
+        </scene>
         <!--Combined File Details View Controller-->
         <scene sceneID="Wi8-es-kUV">
             <objects>
@@ -90,7 +268,7 @@
                                 <rect key="frame" x="0.0" y="411" width="375" height="317"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="3fF-2D-hX8" style="IBUITableViewCellStyleDefault" id="t8G-g7-4vD">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="3fF-2D-hX8" style="IBUITableViewCellStyleDefault" id="t8G-g7-4vD">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t8G-g7-4vD" id="rPx-TY-75R">

@@ -64,7 +64,8 @@ extension FileListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let fileEntity = viewModel.files[indexPath.row]
-        let vc = CombinedFileDetailsViewController.create(withFile: fileEntity)
+//        let vc = CombinedFileDetailsViewController.create(withFile: fileEntity)
+        let vc = FileDetailsViewController.create(withFile: fileEntity)
         navigationController?.pushViewController(vc, animated: true)
     }
 
