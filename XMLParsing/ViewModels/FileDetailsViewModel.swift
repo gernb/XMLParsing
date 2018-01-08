@@ -25,8 +25,8 @@ final class FileDetailsViewModel {
 
     let title = Bindable(Defaults.title)
     let loadingViewIsHidden = Bindable(true)
+    let fileEntity: GpxFileEntity
 
-    private let fileEntity: GpxFileEntity
     private let moc: NSManagedObjectContext
     private let directoryUrl: URL
     private weak var delegate: FileDetailsViewModelDelegate?

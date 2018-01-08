@@ -66,8 +66,9 @@ class FileDetailsViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedSegue" {
             pageViewController = segue.destination as! PageViewController
-            pageViewController.createDataSource()
             pageViewController.pageViewControllerDelegate = self
+            pageViewController.mapView = mapView
+            pageViewController.createDataSource(withMapDisplayDelegate: self)
             pageViewController.showViewController(for: .all)
         }
     }
@@ -87,6 +88,7 @@ extension FileDetailsViewController: FileDetailsViewModelDelegate {
     func dataLoaded(defaultListResult: Result<FileDetailsViewModel.ListType>) {
         switch defaultListResult {
         case .success(let defaultList):
+            pageViewController.fileLoaded(viewModel.fileEntity)
             pageViewController.showViewController(for: defaultList.pageTab)
         case .failure:
             // TODO: Show an error message to the user
@@ -112,6 +114,20 @@ extension FileDetailsViewController: PageViewControllerDelegate {
             fatalError("No matching tab bar item for PageTab: \(pageTab)")
         }
         tabBar.selectedItem = tabItem
+    }
+}
+
+extension FileDetailsViewController: MapDisplayDelegate {
+
+    func showMapArea(center: CLLocationCoordinate2D, latitudeDelta: CLLocationDegrees, longitudeDelta: CLLocationDegrees) {
+        let span = MKCoordinateSpanMake(latitudeDelta, longitudeDelta)
+        let region = MKCoordinateRegionMake(center, span)
+        mapView.setVisibleMapRect(region.mapRect, edgePadding: UIEdgeInsetsMake(50, 50, 50, 50), animated: true)
+    }
+
+    func showMapArea(center: CLLocationCoordinate2D, latitudinalMeters: CLLocationDistance, longitudinalMeters: CLLocationDistance) {
+        let region = MKCoordinateRegionMakeWithDistance(center, latitudinalMeters, longitudinalMeters)
+        mapView.setVisibleMapRect(region.mapRect, edgePadding: UIEdgeInsetsMake(50, 50, 50, 50), animated: true)
     }
 }
 

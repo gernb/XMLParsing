@@ -190,6 +190,7 @@ class FileDetailsViewModelTests: XCTestCase {
         var result: Result<FileDetailsViewModel.ListType>?
 
         func dataLoaded(defaultListResult: Result<FileDetailsViewModel.ListType>) {
+            XCTAssertTrue(Thread.isMainThread)
             result = defaultListResult
             exp?.fulfill()
         }

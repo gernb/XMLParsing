@@ -6,12 +6,71 @@
 //  Copyright © 2018 Peter Bohac. All rights reserved.
 //
 
+import MapKit
 import UIKit
 
-class WaypointsListViewController: UIViewController {
+class WaypointsListViewController: ListViewController {
+    @IBOutlet private var tableView: UITableView!
 
-    static func create() -> WaypointsListViewController {
+    private weak var mapView: MKMapView?
+    private var viewModel: WaypointsListViewModel!
+
+    static func create(withMapDisplayDelegate delegate: MapDisplayDelegate, mapView: MKMapView?) -> WaypointsListViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WaypointsListViewController") as! WaypointsListViewController
+        vc.viewModel = WaypointsListViewModel(delegate: delegate)
+        vc.mapView = mapView
         return vc
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        tableView.dataSource = self
+        tableView.delegate = self
+    }
+
+    override func bindViewModel() {
+        super.bindViewModel()
+        mapView?.mapViewBindings.waypoints.bind(viewModel.selectedWaypoints)
+    }
+
+    override func fileLoaded(_ fileEntity: GpxFileEntity) {
+        super.fileLoaded(fileEntity)
+        viewModel.updateGpxFileEntity(with: fileEntity)
+        tableView?.reloadData()
+    }
+}
+
+extension WaypointsListViewController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.waypoints.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellView = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let props = viewModel.rowProperties(atIndex: indexPath.row)
+        cellView.textLabel?.text = props.title
+        cellView.detailTextLabel?.text = props.subtitle
+        // Setting `isSelected` doesn't appear to be "enough". The TableView itself needs to "know" that this row is selected.
+        if props.isSelected {
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        }
+        return cellView
+    }
+}
+
+extension WaypointsListViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.selectWaypoint(atIndex: indexPath.row)
+    }
+
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        viewModel.deselectWaypoint(atIndex: indexPath.row)
     }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllListViewController: UIViewController {
+class AllListViewController: ListViewController {
 
     static func create() -> AllListViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AllListViewController") as! AllListViewController

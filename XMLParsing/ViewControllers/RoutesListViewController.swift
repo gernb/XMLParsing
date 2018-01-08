@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RoutesListViewController: UIViewController {
+class RoutesListViewController: ListViewController {
 
     static func create() -> RoutesListViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RoutesListViewController") as! RoutesListViewController

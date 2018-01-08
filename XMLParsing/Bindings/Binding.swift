@@ -17,8 +17,8 @@ public final class Bindable<T>: CustomDebugStringConvertible {
             return binding?.getValue() ?? initialValue
         }
         set {
-            guard let binding = binding else { initialValue = newValue; return }
-            binding.setValue(newValue)
+            initialValue = newValue
+            binding?.setValue(newValue)
         }
     }
 
