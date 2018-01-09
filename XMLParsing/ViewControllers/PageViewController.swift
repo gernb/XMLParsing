@@ -56,7 +56,7 @@ class PageViewController: UIPageViewController {
         let vc = orderedViewControllers[index]
 
         guard let currentVC = viewControllers?.first as? ListViewController, let currentIndex = orderedViewControllers.index(of: currentVC) else {
-            setViewControllers([vc], direction: .forward, animated: true, completion: nil)
+            setViewController(vc, direction: .forward)
             pageChanged(toIndex: index)
             return
         }
@@ -65,11 +65,24 @@ class PageViewController: UIPageViewController {
         }
 
         if index < currentIndex {
-            setViewControllers([vc], direction: .reverse, animated: true, completion: nil)
+            setViewController(vc, direction: .reverse)
             pageChanged(toIndex: index)
         } else {
-            setViewControllers([vc], direction: .forward, animated: true, completion: nil)
+            setViewController(vc, direction: .forward)
             pageChanged(toIndex: index)
+        }
+    }
+
+    // In order to work around a bug in the UIPageViewController when using the scroll animaton and calling setViewControllers(... animated: true ...)
+    // See: https://stackoverflow.com/questions/12939280/uipageviewcontroller-navigates-to-wrong-page-with-scroll-transition-style
+    private func setViewController(_ viewController: UIViewController, direction: UIPageViewControllerNavigationDirection) {
+        setViewControllers([viewController], direction: direction, animated: true) { [weak self] done in
+            if done {
+                // On the next run loop
+                DispatchQueue.main.async { [weak self] in
+                    self?.setViewControllers([viewController], direction: direction, animated: false, completion: nil)
+                }
+            }
         }
     }
 
@@ -78,8 +91,14 @@ class PageViewController: UIPageViewController {
             fatalError("No PageTab enum for index: \(index)")
         }
 
-        // unbind the MapView
+        // unbind the MapView...
         mapView?.mapViewBindings.waypoints.unbind()
+
+        // ... and clear all the annotations and overlays
+        if let mapView = mapView {
+            mapView.removeAnnotations(mapView.annotations)
+            mapView.removeOverlays(mapView.overlays)
+        }
 
         // bind the MapView to the current ViewController
         orderedViewControllers[newIndex].bindViewModel()
@@ -125,8 +144,6 @@ extension PageViewController: UIPageViewControllerDelegate {
         guard completed, let currentVC = viewControllers?.first as? ListViewController, let currentIndex = orderedViewControllers.index(of: currentVC) else {
             return
         }
-
-        Logger.verbose(category: .view, "New page index: \(currentIndex)")
 
         pageChanged(toIndex: currentIndex)
     }

@@ -98,6 +98,12 @@ extension FileDetailsViewController: FileDetailsViewModelDelegate {
 }
 
 extension FileDetailsViewController: MKMapViewDelegate {
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier, for: annotation)
+        annotationView.clusteringIdentifier = "waypoint"
+        return annotationView
+    }
 }
 
 extension FileDetailsViewController: UITabBarDelegate {

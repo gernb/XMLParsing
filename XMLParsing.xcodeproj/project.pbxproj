@@ -75,6 +75,7 @@
 		44F0A48E2002F01100835154 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A48D2002F01100835154 /* ListViewController.swift */; };
 		44F0A4902002FEFF00835154 /* WaypointsListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A48F2002FEFF00835154 /* WaypointsListViewModelTests.swift */; };
 		44F0A49220031AC500835154 /* MockMapDisplayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A49120031AC500835154 /* MockMapDisplayDelegate.swift */; };
+		44F0A49420046E6B00835154 /* UITableView+EmptyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A49320046E6B00835154 /* UITableView+EmptyMessage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +161,7 @@
 		44F0A48D2002F01100835154 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		44F0A48F2002FEFF00835154 /* WaypointsListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaypointsListViewModelTests.swift; sourceTree = "<group>"; };
 		44F0A49120031AC500835154 /* MockMapDisplayDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMapDisplayDelegate.swift; sourceTree = "<group>"; };
+		44F0A49320046E6B00835154 /* UITableView+EmptyMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+EmptyMessage.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -366,6 +368,7 @@
 				448FA1801FF7523800E0AB3F /* PickerButton.swift */,
 				448FA1701FF6BB5000E0AB3F /* Result.swift */,
 				44B080891FF379D0008C561F /* Thread+RunOnMainThread.swift */,
+				44F0A49320046E6B00835154 /* UITableView+EmptyMessage.swift */,
 				44B080871FF375BB008C561F /* UIView+LoadingView.swift */,
 			);
 			path = Utils;
@@ -541,6 +544,7 @@
 				44B080821FF34F6E008C561F /* FileListViewController.swift in Sources */,
 				44B080631FF1CA5D008C561F /* ISO8601.swift in Sources */,
 				44B080801FF343C9008C561F /* FileUtils.swift in Sources */,
+				44F0A49420046E6B00835154 /* UITableView+EmptyMessage.swift in Sources */,
 				44B080671FF1CB9B008C561F /* GpxTrackSegment.swift in Sources */,
 				44B0808A1FF379D0008C561F /* Thread+RunOnMainThread.swift in Sources */,
 				44F0A4882002CA1C00835154 /* WaypointsListViewModel.swift in Sources */,

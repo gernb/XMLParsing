@@ -39,6 +39,10 @@ class WaypointsListViewController: ListViewController {
         viewModel.updateGpxFileEntity(with: fileEntity)
         tableView?.reloadData()
     }
+
+    private struct Constants {
+        static let emptyTableText = NSLocalizedString("No waypoints", comment: "Message shown in list when there are no waypoints")
+    }
 }
 
 extension WaypointsListViewController: UITableViewDataSource {
@@ -48,6 +52,9 @@ extension WaypointsListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if viewModel.waypoints.count < 1 {
+            tableView.displayEmptyMessage(Constants.emptyTableText)
+        }
         return viewModel.waypoints.count
     }
 
