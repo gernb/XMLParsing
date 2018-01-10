@@ -10,8 +10,11 @@ import MapKit
 
 public extension GpxRoute {
 
-    var polyline: MKPolyline {
+    var polyline: GpxPolyline {
         let coordinates = self.points.map { $0.coordinate }
-        return MKPolyline(coordinates: coordinates, count: coordinates.count)
+        let polyline = GpxPolyline(coordinates: coordinates, count: coordinates.count)
+        polyline.type = .route
+        polyline.route = self
+        return polyline
     }
 }

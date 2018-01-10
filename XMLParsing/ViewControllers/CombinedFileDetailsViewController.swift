@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class CombinedFileDetailsViewController: UIViewController {
+final class CombinedFileDetailsViewController: UIViewController {
     @IBOutlet private var mapView: MKMapView!
     @IBOutlet private var mapTypeButton: PickerButton!
     @IBOutlet private var tableView: UITableView!

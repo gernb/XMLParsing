@@ -13,6 +13,10 @@ protocol FileDetailsViewModelDelegate: class {
     func dataLoaded(defaultListResult: Result<FileDetailsViewModel.ListType>)
 }
 
+protocol GpxFileProviding: class {
+    func getGpxFile(completion: @escaping (Result<GpxFile>) -> Void)
+}
+
 final class FileDetailsViewModel {
 
     enum ListType {
@@ -103,5 +107,31 @@ final class FileDetailsViewModel {
 
     private struct Defaults {
         static let title = NSLocalizedString("GPX File", comment: "Default title of the file details scene")
+    }
+}
+
+extension FileDetailsViewModel: GpxFileProviding {
+
+    func getGpxFile(completion: @escaping (Result<GpxFile>) -> Void) {
+        if let gpxFile = gpxFile {
+            completion(.success(gpxFile))
+            return
+        }
+
+        loadingViewIsHidden.value = false
+        let fileUrl = directoryUrl.appendingPathComponent(fileEntity.path!)
+        GpxFile.read(fromUrl: fileUrl) { [weak self] result in
+            Thread.runOnMainThread {
+                self?.loadingViewIsHidden.value = true
+            }
+            switch result {
+            case .success(let file):
+                self?.gpxFile = file
+                completion(.success(file))
+            case.failure(let error):
+                Logger.error(category: .viewModel, "\(error)")
+                completion(.failure(error))
+            }
+        }
     }
 }

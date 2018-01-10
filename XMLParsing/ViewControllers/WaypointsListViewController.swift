@@ -9,7 +9,7 @@
 import MapKit
 import UIKit
 
-class WaypointsListViewController: ListViewController {
+final class WaypointsListViewController: ListViewController {
     @IBOutlet private var tableView: UITableView!
 
     private weak var mapView: MKMapView?

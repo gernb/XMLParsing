@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class FileDetailsViewController: UIViewController {
+final class FileDetailsViewController: UIViewController {
     @IBOutlet private var mapView: MKMapView!
     @IBOutlet private var mapTypeButton: PickerButton!
     @IBOutlet private var tabBar: UITabBar!
@@ -68,7 +68,7 @@ class FileDetailsViewController: UIViewController {
             pageViewController = segue.destination as! PageViewController
             pageViewController.pageViewControllerDelegate = self
             pageViewController.mapView = mapView
-            pageViewController.createDataSource(withMapDisplayDelegate: self)
+            pageViewController.createDataSource(withMapDisplayDelegate: self, gpxFileProvider: viewModel)
             pageViewController.showViewController(for: .all)
         }
     }
@@ -98,6 +98,16 @@ extension FileDetailsViewController: FileDetailsViewModelDelegate {
 }
 
 extension FileDetailsViewController: MKMapViewDelegate {
+
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if let polyline = overlay as? GpxPolyline {
+            let renderer = MKPolylineRenderer(overlay: polyline)
+            renderer.strokeColor = polyline.type == .trackSegment ? .red : .purple
+            renderer.lineWidth = 2.0
+            return renderer
+        }
+        return MKOverlayRenderer(overlay: overlay)
+    }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier, for: annotation)

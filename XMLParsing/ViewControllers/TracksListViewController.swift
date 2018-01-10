@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TracksListViewController: ListViewController {
+final class TracksListViewController: ListViewController {
 
     static func create() -> TracksListViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TracksListViewController") as! TracksListViewController

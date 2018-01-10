@@ -17,7 +17,7 @@ protocol PageViewControllerDelegate: class {
     func pageViewController(_ pageViewController: PageViewController, pageChangedTo pageTab: PageTab)
 }
 
-class PageViewController: UIPageViewController {
+final class PageViewController: UIPageViewController {
     public weak var pageViewControllerDelegate: PageViewControllerDelegate?
     public weak var mapView: MKMapView?
 
@@ -30,11 +30,11 @@ class PageViewController: UIPageViewController {
         delegate = self
     }
 
-    func createDataSource(withMapDisplayDelegate delegate: MapDisplayDelegate) {
+    func createDataSource(withMapDisplayDelegate delegate: MapDisplayDelegate, gpxFileProvider: GpxFileProviding) {
         orderedViewControllers = [
             AllListViewController.create(),
             TracksListViewController.create(),
-            RoutesListViewController.create(),
+            RoutesListViewController.create(withMapDisplayDelegate: delegate, gpxFileProvider: gpxFileProvider, mapView: mapView),
             WaypointsListViewController.create(withMapDisplayDelegate: delegate, mapView: mapView)
         ]
     }
@@ -93,6 +93,7 @@ class PageViewController: UIPageViewController {
 
         // unbind the MapView...
         mapView?.mapViewBindings.waypoints.unbind()
+        mapView?.mapViewBindings.gpxRoutes.unbind()
 
         // ... and clear all the annotations and overlays
         if let mapView = mapView {
