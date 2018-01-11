@@ -83,6 +83,14 @@ public extension MKMapView {
                 },
                                 getValue: { return [] })
 
+        /// One-way `Binding` of an array of `GpxPathProvider` objects to the `overlays` property.
+        private (set) public lazy var gpxPaths: Binding<[GpxPathProvider]> =
+            Binding<[GpxPathProvider]>(setValue: { [unowned self] v in
+                self.mapView.removeOverlays(self.mapView.overlays)
+                for path in v { self.mapView.add(path.polyline) }
+                },
+                                getValue: { return [] })
+
         public init(_ mapView: MKMapView) {
             self.mapView = mapView
             super.init(mapView)

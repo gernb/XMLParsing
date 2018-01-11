@@ -11,7 +11,7 @@ import CoreLocation
 public struct GpxRoute: Codable, CustomStringConvertible {
     public var name: String?
     public var routeDescription: String?
-    private (set) var points: [GpxWaypoint]
+    private (set) public var points: [GpxWaypoint]
 
     public class ComputedProperties: Codable {
         fileprivate (set) public var bounds: GpxBounds?

@@ -29,7 +29,7 @@ final class WaypointsListViewModel {
         selectedWaypointIndexes.removeAll()
     }
 
-    func rowProperties(atIndex index: Int) -> (title: String, subtitle: String?, isSelected: Bool) {
+    func rowProperties(for index: Int) -> (title: String, subtitle: String?, isSelected: Bool) {
         assert(index < waypoints.count && index >= 0)
         let title = waypoints[index].name ?? Defaults.name
         let subtitle = waypoints[index].waypointDescription
@@ -37,14 +37,14 @@ final class WaypointsListViewModel {
         return (title, subtitle, isSelected)
     }
 
-    func selectWaypoint(atIndex index: Int) {
+    func selectWaypoint(at index: Int) {
         assert(index < waypoints.count && index >= 0)
         guard !selectedWaypointIndexes.contains(index) else { return }
         selectedWaypointIndexes.insert(index)
         selectedWaypointsChanged()
     }
 
-    func deselectWaypoint(atIndex index: Int) {
+    func deselectWaypoint(at index: Int) {
         guard selectedWaypointIndexes.contains(index) else { return }
         selectedWaypointIndexes.remove(index)
         selectedWaypointsChanged()

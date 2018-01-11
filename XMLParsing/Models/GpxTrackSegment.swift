@@ -7,7 +7,7 @@
 //
 
 public struct GpxTrackSegment: Codable, CustomStringConvertible {
-    private (set) var points: [GpxWaypoint]
+    private (set) public var points: [GpxWaypoint]
 
     public var xml: XMLNode {
         let node = XMLNode(name: Constants.nodeName)

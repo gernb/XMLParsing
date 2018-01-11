@@ -160,11 +160,11 @@ class FileListViewModelTests: XCTestCase {
         wait(for: [mockDelegate.exp!], timeout: 2.0)
         XCTAssertEqual(sut.files.count, 2)
 
-        let row0 = sut.rowProperties(atIndex: 0)
+        let row0 = sut.rowProperties(for: 0)
         XCTAssertEqual(row0.title, "File 1")
         XCTAssertEqual(row0.subtitle, "1 track(s), 2 route(s), 3 waypoint(s)")
 
-        let row1 = sut.rowProperties(atIndex: 1)
+        let row1 = sut.rowProperties(for: 1)
         XCTAssertEqual(row1.title, "File 2")
         XCTAssertEqual(row1.subtitle, "")
     }

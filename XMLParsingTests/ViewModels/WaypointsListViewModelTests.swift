@@ -58,14 +58,14 @@ class WaypointsListViewModelTests: XCTestCase {
         let sut = WaypointsListViewModel(delegate: mockDelegate)
         sut.updateGpxFileEntity(with: fileEntity)
 
-        var props = sut.rowProperties(atIndex: 0)
+        var props = sut.rowProperties(for: 0)
 
         XCTAssertEqual(props.title, "Waypoint Name")
         XCTAssertEqual(props.subtitle, #function)
         XCTAssertFalse(props.isSelected)
 
-        sut.selectWaypoint(atIndex: 0)
-        props = sut.rowProperties(atIndex: 0)
+        sut.selectWaypoint(at: 0)
+        props = sut.rowProperties(for: 0)
 
         XCTAssertEqual(props.title, "Waypoint Name")
         XCTAssertEqual(props.subtitle, #function)
@@ -85,11 +85,11 @@ class WaypointsListViewModelTests: XCTestCase {
 
         XCTAssertEqual(sut.selectedWaypoints.value, [])
 
-        sut.selectWaypoint(atIndex: 0)
+        sut.selectWaypoint(at: 0)
 
         XCTAssertEqual(sut.selectedWaypoints.value, [waypointEntity])
 
-        sut.deselectWaypoint(atIndex: 0)
+        sut.deselectWaypoint(at: 0)
 
         XCTAssertEqual(sut.selectedWaypoints.value, [])
     }

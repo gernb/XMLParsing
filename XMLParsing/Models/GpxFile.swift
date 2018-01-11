@@ -9,9 +9,9 @@
 import Foundation
 
 public struct GpxFile: Codable, CustomStringConvertible {
-    private (set) var routes: [GpxRoute]
-    private (set) var tracks: [GpxTrack]
-    private (set) var waypoints: [GpxWaypoint]
+    private (set) public var routes: [GpxRoute]
+    private (set) public var tracks: [GpxTrack]
+    private (set) public var waypoints: [GpxWaypoint]
 
     public var xml: XMLNode {
         let attributes = [Constants.version.key: Constants.version.value,

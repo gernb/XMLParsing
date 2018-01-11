@@ -52,7 +52,7 @@ extension FileListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellView = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let props = viewModel.rowProperties(atIndex: indexPath.row)
+        let props = viewModel.rowProperties(for: indexPath.row)
         cellView.textLabel?.text = props.title
         cellView.detailTextLabel?.text = props.subtitle
         return cellView

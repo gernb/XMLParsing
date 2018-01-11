@@ -21,4 +21,9 @@ extension UITableView {
         backgroundView = label
         separatorStyle = .none
     }
+
+    func removeEmptyMessage() {
+        backgroundView = nil
+        separatorStyle = .singleLine
+    }
 }

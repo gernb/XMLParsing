@@ -92,7 +92,7 @@ final class FileLisViewModel {
         }
     }
 
-    func rowProperties(atIndex index: Int) -> (title: String, subtitle: String) {
+    func rowProperties(for index: Int) -> (title: String, subtitle: String) {
         assert(index < files.count && index >= 0)
         let file = files[index]
         let title = file.name ?? Defaults.name

@@ -60,7 +60,7 @@ extension WaypointsListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellView = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let props = viewModel.rowProperties(atIndex: indexPath.row)
+        let props = viewModel.rowProperties(for: indexPath.row)
         cellView.textLabel?.text = props.title
         cellView.detailTextLabel?.text = props.subtitle
         // Setting `isSelected` doesn't appear to be "enough". The TableView itself needs to "know" that this row is selected.
@@ -74,10 +74,10 @@ extension WaypointsListViewController: UITableViewDataSource {
 extension WaypointsListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.selectWaypoint(atIndex: indexPath.row)
+        viewModel.selectWaypoint(at: indexPath.row)
     }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        viewModel.deselectWaypoint(atIndex: indexPath.row)
+        viewModel.deselectWaypoint(at: indexPath.row)
     }
 }

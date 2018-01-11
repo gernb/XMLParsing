@@ -16,6 +16,4 @@ public class GpxPolyline: MKPolyline {
     }
 
     public var type: GpxType!
-    public var route: GpxRoute?
-    public var trackSegment: GpxTrackSegment?
 }

@@ -30,7 +30,7 @@ final class TracksListViewModel {
         selectedTrackIndexes.removeAll()
     }
 
-    func rowProperties(atIndex index: Int) -> (title: String, subtitle: String?, isSelected: Bool) {
+    func rowProperties(for index: Int) -> (title: String, subtitle: String?, isSelected: Bool) {
         assert(index < tracks.count && index >= 0)
         let title = tracks[index].name ?? Defaults.name
         let subtitle = tracks[index].trackDescription
@@ -38,7 +38,7 @@ final class TracksListViewModel {
         return (title, subtitle, isSelected)
     }
 
-    func selectTrack(atIndex index: Int) {
+    func selectTrack(at index: Int) {
         assert(index < tracks.count && index >= 0)
         guard !selectedTrackIndexes.contains(index) else { return }
         selectedTrackIndexes.insert(index)
@@ -49,7 +49,7 @@ final class TracksListViewModel {
         }
     }
 
-    func deselectTrack(atIndex index: Int) {
+    func deselectTrack(at index: Int) {
         guard selectedTrackIndexes.contains(index) else { return }
         selectedTrackIndexes.remove(index)
         gpxFileProvider?.getGpxFile() { [weak self] result in

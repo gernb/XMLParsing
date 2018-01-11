@@ -14,7 +14,6 @@ public extension GpxRoute {
         let coordinates = self.points.map { $0.coordinate }
         let polyline = GpxPolyline(coordinates: coordinates, count: coordinates.count)
         polyline.type = .route
-        polyline.route = self
         return polyline
     }
 }

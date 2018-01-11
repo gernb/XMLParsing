@@ -13,7 +13,6 @@ public extension GpxTrackSegment {
         let coordinates = self.points.map { $0.coordinate }
         let polyline = GpxPolyline(coordinates: coordinates, count: coordinates.count)
         polyline.type = .trackSegment
-        polyline.trackSegment = self
         return polyline
     }
 }

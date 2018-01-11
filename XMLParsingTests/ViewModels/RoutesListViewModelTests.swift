@@ -60,7 +60,7 @@ class RoutesListViewModelTests: XCTestCase {
         let sut = RoutesListViewModel(delegate: mockDelegate, gpxFileProvider: mockGpxFileProvider)
         sut.updateGpxFileEntity(with: fileEntity)
 
-        let props = sut.rowProperties(atIndex: 0)
+        let props = sut.rowProperties(for: 0)
 
         XCTAssertEqual(props.title, "Route Name")
         XCTAssertEqual(props.subtitle, #function)
@@ -83,7 +83,7 @@ class RoutesListViewModelTests: XCTestCase {
         let sut = RoutesListViewModel(delegate: mockDelegate, gpxFileProvider: mockGpxFileProvider)
         sut.updateGpxFileEntity(with: fileEntity)
 
-        sut.selectRoute(atIndex: 0)
+        sut.selectRoute(at: 0)
 
         waitForExpectations(timeout: 2.0) { error in
             XCTAssertNil(error)
