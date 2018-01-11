@@ -45,9 +45,9 @@ public extension MKMapView {
                                  getValue: { [unowned self] in return self.mapView.overlays })
 
         /// `Binding` for the `region` property.
-        private (set) public lazy var region: Binding<MKCoordinateRegion> =
-            Binding<MKCoordinateRegion>(setValue: { [unowned self] v in self.mapView.setRegion(v, animated: true) },
-                                        getValue: { [unowned self] in return self.mapView.region })
+        private (set) public lazy var region: Binding<GpxBounds> =
+            Binding<GpxBounds>(setValue: { [unowned self] v in self.mapView.setVisibleMapRect(v.coordinateRegion.mapRect, edgePadding: UIEdgeInsetsMake(50, 50, 50, 50), animated: true) },
+                               getValue: { [unowned self] in return self.mapView.region.gpxBounds })
 
         /// One-way `Binding` of an array of `GpxWaypoint` objects to the `annotations` property.
         private (set) public lazy var gpxWaypoints: Binding<[GpxWaypoint]> =

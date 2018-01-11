@@ -15,9 +15,9 @@ final class RoutesListViewController: ListViewController {
     private weak var mapView: MKMapView?
     private var viewModel: RoutesListViewModel!
 
-    static func create(withMapDisplayDelegate delegate: MapDisplayDelegate, gpxFileProvider: GpxFileProviding, mapView: MKMapView?) -> RoutesListViewController {
+    static func create(with gpxFileProvider: GpxFileProviding, mapView: MKMapView?) -> RoutesListViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RoutesListViewController") as! RoutesListViewController
-        vc.viewModel = RoutesListViewModel(delegate: delegate, gpxFileProvider: gpxFileProvider)
+        vc.viewModel = RoutesListViewModel(gpxFileProvider: gpxFileProvider)
         vc.mapView = mapView
         return vc
     }
@@ -31,7 +31,8 @@ final class RoutesListViewController: ListViewController {
 
     override func bindViewModel() {
         super.bindViewModel()
-        mapView?.mapViewBindings.gpxRoutes.bind(viewModel.selectedRoutes)
+        mapView?.mapViewBindings.gpxPaths.bind(viewModel.selectedRoutes)
+        mapView?.mapViewBindings.region.bind(viewModel.selectionBounds)
     }
 
     override func fileLoaded(_ fileEntity: GpxFileEntity) {

@@ -13,11 +13,10 @@ final class WaypointsListViewController: ListViewController {
     @IBOutlet private var tableView: UITableView!
 
     private weak var mapView: MKMapView?
-    private var viewModel: WaypointsListViewModel!
+    private var viewModel = WaypointsListViewModel()
 
-    static func create(withMapDisplayDelegate delegate: MapDisplayDelegate, mapView: MKMapView?) -> WaypointsListViewController {
+    static func create(with mapView: MKMapView?) -> WaypointsListViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WaypointsListViewController") as! WaypointsListViewController
-        vc.viewModel = WaypointsListViewModel(delegate: delegate)
         vc.mapView = mapView
         return vc
     }
@@ -32,6 +31,7 @@ final class WaypointsListViewController: ListViewController {
     override func bindViewModel() {
         super.bindViewModel()
         mapView?.mapViewBindings.waypoints.bind(viewModel.selectedWaypoints)
+        mapView?.mapViewBindings.region.bind(viewModel.selectionBounds)
     }
 
     override func fileLoaded(_ fileEntity: GpxFileEntity) {

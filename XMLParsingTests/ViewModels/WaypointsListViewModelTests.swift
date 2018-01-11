@@ -35,8 +35,7 @@ class WaypointsListViewModelTests: XCTestCase {
         let waypointEntity = GpxWaypointEntity(context: container.viewContext, latitude: 1.0, longitude: 2.0)
         waypointEntity.name = "Waypoint Name"
         waypointEntity.file = fileEntity
-        let mockDelegate = MockMapDisplayDelegate()
-        let sut = WaypointsListViewModel(delegate: mockDelegate)
+        let sut = WaypointsListViewModel()
 
         XCTAssertEqual(sut.waypoints, [])
         XCTAssertEqual(sut.selectedWaypoints.value, [])
@@ -54,8 +53,7 @@ class WaypointsListViewModelTests: XCTestCase {
         waypointEntity.name = "Waypoint Name"
         waypointEntity.waypointDescription = #function
         waypointEntity.file = fileEntity
-        let mockDelegate = MockMapDisplayDelegate()
-        let sut = WaypointsListViewModel(delegate: mockDelegate)
+        let sut = WaypointsListViewModel()
         sut.updateGpxFileEntity(with: fileEntity)
 
         var props = sut.rowProperties(for: 0)
@@ -79,8 +77,7 @@ class WaypointsListViewModelTests: XCTestCase {
         waypointEntity.name = "Waypoint Name"
         waypointEntity.waypointDescription = #function
         waypointEntity.file = fileEntity
-        let mockDelegate = MockMapDisplayDelegate()
-        let sut = WaypointsListViewModel(delegate: mockDelegate)
+        let sut = WaypointsListViewModel()
         sut.updateGpxFileEntity(with: fileEntity)
 
         XCTAssertEqual(sut.selectedWaypoints.value, [])

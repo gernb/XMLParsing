@@ -35,9 +35,8 @@ class TracksListViewModelTests: XCTestCase {
         let trackEntity = GpxTrackEntity(context: container.viewContext)
         trackEntity.name = "Track Name"
         trackEntity.file = fileEntity
-        let mockDelegate = MockMapDisplayDelegate()
         let mockGpxFileProvider = MockGpxFileProvider()
-        let sut = TracksListViewModel(delegate: mockDelegate, gpxFileProvider: mockGpxFileProvider)
+        let sut = TracksListViewModel(gpxFileProvider: mockGpxFileProvider)
 
         XCTAssertEqual(sut.tracks, [])
         XCTAssertEqual(sut.selectedTracks.value.count, 0)
@@ -55,16 +54,22 @@ class TracksListViewModelTests: XCTestCase {
         trackEntity.name = "Track Name"
         trackEntity.trackDescription = #function
         trackEntity.file = fileEntity
-        let mockDelegate = MockMapDisplayDelegate()
         let mockGpxFileProvider = MockGpxFileProvider()
-        let sut = TracksListViewModel(delegate: mockDelegate, gpxFileProvider: mockGpxFileProvider)
+        let sut = TracksListViewModel(gpxFileProvider: mockGpxFileProvider)
         sut.updateGpxFileEntity(with: fileEntity)
 
-        let props = sut.rowProperties(for: 0)
+        var props = sut.rowProperties(for: 0)
 
         XCTAssertEqual(props.title, "Track Name")
         XCTAssertEqual(props.subtitle, #function)
         XCTAssertFalse(props.isSelected)
+
+        sut.selectTrack(at: 0)
+        props = sut.rowProperties(for: 0)
+
+        XCTAssertEqual(props.title, "Track Name")
+        XCTAssertEqual(props.subtitle, #function)
+        XCTAssertTrue(props.isSelected)
     }
 
     func testSelectTrack() {
@@ -74,21 +79,37 @@ class TracksListViewModelTests: XCTestCase {
         trackEntity.name = "Track Name"
         trackEntity.trackDescription = #function
         trackEntity.file = fileEntity
-        let mockDelegate = MockMapDisplayDelegate()
-        mockDelegate.exp = expectation(description: #function)
-        let mockGpxFileProvider = MockGpxFileProvider()
-        var gpxFile = GpxFile()
-        gpxFile.add(track: GpxTrack(name: "Track Name", description: #function))
-        mockGpxFileProvider.gpxFile = gpxFile
-        let sut = TracksListViewModel(delegate: mockDelegate, gpxFileProvider: mockGpxFileProvider)
-        sut.updateGpxFileEntity(with: fileEntity)
 
+        let mockGpxFileProvider = MockGpxFileProvider()
+        let gpxFile: GpxFile = {
+            let pt1 = GpxWaypoint(withNodeName: .trackpoint, latitude: 1.0, longitude: 2.0)
+            let pt2 = GpxWaypoint(withNodeName: .trackpoint, latitude: 1.1, longitude: 2.1)
+            let segment = GpxTrackSegment(points: [pt1, pt2])
+            let track = GpxTrack(name: "Track Name", description: #function, segments: [segment])
+            return GpxFile(tracks: [track])
+        }()
+        mockGpxFileProvider.gpxFile = gpxFile
+
+        var selectedTrackSegments = [GpxPathProvider]()
+        var exp: XCTestExpectation? = nil
+        let binding = Binding<[GpxPathProvider]>(setValue: { v in selectedTrackSegments = v; exp?.fulfill() },
+                                                 getValue: { return selectedTrackSegments })
+
+        let sut = TracksListViewModel(gpxFileProvider: mockGpxFileProvider)
+        sut.updateGpxFileEntity(with: fileEntity)
+        binding.bind(sut.selectedTracks)
+
+        exp = expectation(description: "selected tracks changed")
         sut.selectTrack(at: 0)
 
-        waitForExpectations(timeout: 2.0) { error in
-            XCTAssertNil(error)
-            XCTAssertEqual(sut.selectedTracks.value.count, 1)
-            XCTAssertEqual(sut.selectedTracks.value[0].name, "Track Name")
-        }
+        wait(for: [exp!], timeout: 2.0)
+        XCTAssertEqual(selectedTrackSegments.count, gpxFile.tracks[0].segments.count)
+        XCTAssertEqual(selectedTrackSegments[0].pathType, .trackSegment)
+
+        exp = expectation(description: "selected tracks changed, again")
+        sut.deselectTrack(at: 0)
+
+        wait(for: [exp!], timeout: 2.0)
+        XCTAssertEqual(selectedTrackSegments.count, 0)
     }
 }

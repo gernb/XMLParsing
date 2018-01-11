@@ -35,9 +35,8 @@ class RoutesListViewModelTests: XCTestCase {
         let routeEntity = GpxRouteEntity(context: container.viewContext)
         routeEntity.name = "Route Name"
         routeEntity.file = fileEntity
-        let mockDelegate = MockMapDisplayDelegate()
         let mockGpxFileProvider = MockGpxFileProvider()
-        let sut = RoutesListViewModel(delegate: mockDelegate, gpxFileProvider: mockGpxFileProvider)
+        let sut = RoutesListViewModel(gpxFileProvider: mockGpxFileProvider)
 
         XCTAssertEqual(sut.routes, [])
         XCTAssertEqual(sut.selectedRoutes.value.count, 0)
@@ -55,16 +54,22 @@ class RoutesListViewModelTests: XCTestCase {
         routeEntity.name = "Route Name"
         routeEntity.routeDescription = #function
         routeEntity.file = fileEntity
-        let mockDelegate = MockMapDisplayDelegate()
         let mockGpxFileProvider = MockGpxFileProvider()
-        let sut = RoutesListViewModel(delegate: mockDelegate, gpxFileProvider: mockGpxFileProvider)
+        let sut = RoutesListViewModel(gpxFileProvider: mockGpxFileProvider)
         sut.updateGpxFileEntity(with: fileEntity)
 
-        let props = sut.rowProperties(for: 0)
+        var props = sut.rowProperties(for: 0)
 
         XCTAssertEqual(props.title, "Route Name")
         XCTAssertEqual(props.subtitle, #function)
         XCTAssertFalse(props.isSelected)
+
+        sut.selectRoute(at: 0)
+        props = sut.rowProperties(for: 0)
+
+        XCTAssertEqual(props.title, "Route Name")
+        XCTAssertEqual(props.subtitle, #function)
+        XCTAssertTrue(props.isSelected)
     }
 
     func testSelectRoute() {
@@ -74,21 +79,36 @@ class RoutesListViewModelTests: XCTestCase {
         routeEntity.name = "Route Name"
         routeEntity.routeDescription = #function
         routeEntity.file = fileEntity
-        let mockDelegate = MockMapDisplayDelegate()
-        mockDelegate.exp = expectation(description: #function)
-        let mockGpxFileProvider = MockGpxFileProvider()
-        var gpxFile = GpxFile()
-        gpxFile.add(route: GpxRoute(name: "Route Name", description: #function))
-        mockGpxFileProvider.gpxFile = gpxFile
-        let sut = RoutesListViewModel(delegate: mockDelegate, gpxFileProvider: mockGpxFileProvider)
-        sut.updateGpxFileEntity(with: fileEntity)
 
+        let mockGpxFileProvider = MockGpxFileProvider()
+        let gpxFile: GpxFile = {
+            let pt1 = GpxWaypoint(withNodeName: .routepoint, latitude: 1.0, longitude: 2.0)
+            let pt2 = GpxWaypoint(withNodeName: .routepoint, latitude: 1.1, longitude: 2.1)
+            let route = GpxRoute(name: "Route Name", description: #function, points: [pt1, pt2])
+            return GpxFile(routes: [route])
+        }()
+        mockGpxFileProvider.gpxFile = gpxFile
+
+        var selectedRoutes = [GpxPathProvider]()
+        var exp: XCTestExpectation? = nil
+        let binding = Binding<[GpxPathProvider]>(setValue: { v in selectedRoutes = v; exp?.fulfill() },
+                                                 getValue: { return selectedRoutes })
+
+        let sut = RoutesListViewModel(gpxFileProvider: mockGpxFileProvider)
+        sut.updateGpxFileEntity(with: fileEntity)
+        binding.bind(sut.selectedRoutes)
+
+        exp = expectation(description: "selected routes changed")
         sut.selectRoute(at: 0)
 
-        waitForExpectations(timeout: 2.0) { error in
-            XCTAssertNil(error)
-            XCTAssertEqual(sut.selectedRoutes.value.count, 1)
-            XCTAssertEqual(sut.selectedRoutes.value[0].name, "Route Name")
-        }
+        wait(for: [exp!], timeout: 2.0)
+        XCTAssertEqual(selectedRoutes.count, 1)
+        XCTAssertEqual(selectedRoutes[0].pathType, .route)
+
+        exp = expectation(description: "selected routes changed, again")
+        sut.deselectRoute(at: 0)
+
+        wait(for: [exp!], timeout: 2.0)
+        XCTAssertEqual(selectedRoutes.count, 0)
     }
 }

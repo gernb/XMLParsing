@@ -68,7 +68,7 @@ final class FileDetailsViewController: UIViewController {
             pageViewController = segue.destination as! PageViewController
             pageViewController.pageViewControllerDelegate = self
             pageViewController.mapView = mapView
-            pageViewController.createDataSource(withMapDisplayDelegate: self, gpxFileProvider: viewModel)
+            pageViewController.createDataSource(with: viewModel)
             pageViewController.showViewController(for: .all)
         }
     }
@@ -130,20 +130,6 @@ extension FileDetailsViewController: PageViewControllerDelegate {
             fatalError("No matching tab bar item for PageTab: \(pageTab)")
         }
         tabBar.selectedItem = tabItem
-    }
-}
-
-extension FileDetailsViewController: MapDisplayDelegate {
-
-    func showMapArea(center: CLLocationCoordinate2D, latitudeDelta: CLLocationDegrees, longitudeDelta: CLLocationDegrees) {
-        let span = MKCoordinateSpanMake(latitudeDelta, longitudeDelta)
-        let region = MKCoordinateRegionMake(center, span)
-        mapView.setVisibleMapRect(region.mapRect, edgePadding: UIEdgeInsetsMake(50, 50, 50, 50), animated: true)
-    }
-
-    func showMapArea(center: CLLocationCoordinate2D, latitudinalMeters: CLLocationDistance, longitudinalMeters: CLLocationDistance) {
-        let region = MKCoordinateRegionMakeWithDistance(center, latitudinalMeters, longitudinalMeters)
-        mapView.setVisibleMapRect(region.mapRect, edgePadding: UIEdgeInsetsMake(50, 50, 50, 50), animated: true)
     }
 }
 

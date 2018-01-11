@@ -6,20 +6,20 @@
 //  Copyright © 2018 Peter Bohac. All rights reserved.
 //
 
+import CoreLocation
 import Foundation
 
 final class RoutesListViewModel {
 
-    let selectedRoutes = Bindable<[GpxRoute]>([])
+    let selectedRoutes = Bindable<[GpxPathProvider]>([])
+    let selectionBounds = Bindable<GpxBounds>(Defaults.bounds)
     private (set) var routes: [GpxRouteEntity] = []
 
-    private weak var delegate: MapDisplayDelegate?
     private weak var gpxFileProvider: GpxFileProviding?
     private var fileEntity: GpxFileEntity?
     private var selectedRouteIndexes = Set<Int>()
 
-    init(delegate: MapDisplayDelegate, gpxFileProvider: GpxFileProviding) {
-        self.delegate = delegate
+    init(gpxFileProvider: GpxFileProviding) {
         self.gpxFileProvider = gpxFileProvider
     }
 
@@ -60,11 +60,11 @@ final class RoutesListViewModel {
     }
 
     private func selectedRoutesChanged(file: GpxFile) {
-        var routes = [GpxRoute]()
+        var paths = [GpxPathProvider]()
         var mapBounds: GpxBounds?
         for index in selectedRouteIndexes {
             let route = file.routes[index]
-            routes.append(route)
+            paths.append(route)
             if route.computedProperties.bounds == nil {
                 route.calculateComputedProperties()
             }
@@ -78,14 +78,20 @@ final class RoutesListViewModel {
         }
 
         Thread.runOnMainThread {
-            self.selectedRoutes.value = routes
-            if let b = mapBounds {
-                self.delegate?.showMapArea(center: b.center, latitudeDelta: b.latitudeDelta, longitudeDelta: b.longitudeDelta)
+            self.selectedRoutes.value = paths
+            if let mapBounds = mapBounds {
+                self.selectionBounds.value = mapBounds
             }
         }
     }
 
     private struct Defaults {
         static let name = NSLocalizedString("<Unknown Name>", comment: "Default name of route if not known")
+        static let bounds: GpxBounds = {
+            let center = CLLocationCoordinate2D(latitude: 37.13284, longitude: -95.78558)
+            let latitudeDelta: CLLocationDegrees = 42
+            let longitudeDelta: CLLocationDegrees = 62
+            return GpxBounds(center: center, latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta)
+        }()
     }
 }

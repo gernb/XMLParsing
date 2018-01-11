@@ -30,12 +30,12 @@ final class PageViewController: UIPageViewController {
         delegate = self
     }
 
-    func createDataSource(withMapDisplayDelegate delegate: MapDisplayDelegate, gpxFileProvider: GpxFileProviding) {
+    func createDataSource(with gpxFileProvider: GpxFileProviding) {
         orderedViewControllers = [
-            AllListViewController.create(withMapDisplayDelegate: delegate, gpxFileProvider: gpxFileProvider, mapView: mapView),
-            TracksListViewController.create(withMapDisplayDelegate: delegate, gpxFileProvider: gpxFileProvider, mapView: mapView),
-            RoutesListViewController.create(withMapDisplayDelegate: delegate, gpxFileProvider: gpxFileProvider, mapView: mapView),
-            WaypointsListViewController.create(withMapDisplayDelegate: delegate, mapView: mapView)
+            AllListViewController.create(with: gpxFileProvider, mapView: mapView),
+            TracksListViewController.create(with: gpxFileProvider, mapView: mapView),
+            RoutesListViewController.create(with: gpxFileProvider, mapView: mapView),
+            WaypointsListViewController.create(with: mapView)
         ]
     }
 
@@ -93,9 +93,8 @@ final class PageViewController: UIPageViewController {
 
         // unbind the MapView...
         mapView?.mapViewBindings.waypoints.unbind()
-        mapView?.mapViewBindings.gpxRoutes.unbind()
-        mapView?.mapViewBindings.gpxTracks.unbind()
         mapView?.mapViewBindings.gpxPaths.unbind()
+        mapView?.mapViewBindings.region.unbind()
 
         // ... and clear all the annotations and overlays
         if let mapView = mapView {

@@ -15,9 +15,9 @@ final class AllListViewController: ListViewController {
     private weak var mapView: MKMapView?
     private var viewModel: AllListViewModel!
 
-    static func create(withMapDisplayDelegate delegate: MapDisplayDelegate, gpxFileProvider: GpxFileProviding, mapView: MKMapView?) -> AllListViewController {
+    static func create(with gpxFileProvider: GpxFileProviding, mapView: MKMapView?) -> AllListViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AllListViewController") as! AllListViewController
-        vc.viewModel = AllListViewModel(delegate: delegate, gpxFileProvider: gpxFileProvider)
+        vc.viewModel = AllListViewModel(gpxFileProvider: gpxFileProvider)
         vc.mapView = mapView
         return vc
     }
@@ -34,6 +34,7 @@ final class AllListViewController: ListViewController {
         super.bindViewModel()
         mapView?.mapViewBindings.gpxPaths.bind(viewModel.selectedPaths)
         mapView?.mapViewBindings.waypoints.bind(viewModel.selectedWaypoints)
+        mapView?.mapViewBindings.region.bind(viewModel.selectionBounds)
     }
 
     override func fileLoaded(_ fileEntity: GpxFileEntity) {

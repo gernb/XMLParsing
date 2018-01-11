@@ -39,8 +39,16 @@ public struct GpxBounds: Codable, CustomStringConvertible {
         self.maxLongitude = maxLongitude
     }
 
+    public init(center: CLLocationCoordinate2D, latitudeDelta: CLLocationDegrees, longitudeDelta: CLLocationDegrees) {
+        let minLat = center.latitude - (latitudeDelta / 2)
+        let maxLat = center.latitude + (latitudeDelta / 2)
+        let minLon = center.longitude - (longitudeDelta / 2)
+        let maxLon = center.longitude + (longitudeDelta / 2)
+        self.init(minLatitude: minLat, minLongitude: minLon, maxLatitude: maxLat, maxLongitude: maxLon)
+    }
+
     public init(forCoordinates coordinates: [CLLocationCoordinate2D]) {
-        assert(coordinates.count > 1, "Insufficient number of coordinates supplied")
+        assert(coordinates.count > 0, "Insufficient number of coordinates supplied")
         var bounds: (minLat: CLLocationDegrees, minLon: CLLocationDegrees, maxLat: CLLocationDegrees, maxLon: CLLocationDegrees) = (90.0, 180.0, -90.0, -180.0)
         for coord in coordinates {
             if coord.latitude < bounds.minLat { bounds.minLat = coord.latitude }
@@ -64,5 +72,15 @@ public struct GpxBounds: Codable, CustomStringConvertible {
         case minLongitude = "minLon"
         case maxLatitude = "maxLat"
         case maxLongitude = "maxLon"
+    }
+}
+
+extension GpxBounds: Equatable {
+
+    public static func ==(lhs: GpxBounds, rhs: GpxBounds) -> Bool {
+        return lhs.minLatitude == rhs.minLatitude &&
+            lhs.maxLatitude == rhs.maxLatitude &&
+            lhs.minLongitude == rhs.minLongitude &&
+            lhs.maxLongitude == rhs.maxLongitude
     }
 }

@@ -71,10 +71,8 @@
 		44F0A4842002AA7600835154 /* GpxFileEntity+Sorted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A4832002AA7600835154 /* GpxFileEntity+Sorted.swift */; };
 		44F0A4862002B49800835154 /* FileDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A4852002B49800835154 /* FileDetailsViewModelTests.swift */; };
 		44F0A4882002CA1C00835154 /* WaypointsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A4872002CA1C00835154 /* WaypointsListViewModel.swift */; };
-		44F0A48A2002CAD500835154 /* MapDisplayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A4892002CAD500835154 /* MapDisplayDelegate.swift */; };
 		44F0A48E2002F01100835154 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A48D2002F01100835154 /* ListViewController.swift */; };
 		44F0A4902002FEFF00835154 /* WaypointsListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A48F2002FEFF00835154 /* WaypointsListViewModelTests.swift */; };
-		44F0A49220031AC500835154 /* MockMapDisplayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A49120031AC500835154 /* MockMapDisplayDelegate.swift */; };
 		44F0A49420046E6B00835154 /* UITableView+EmptyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A49320046E6B00835154 /* UITableView+EmptyMessage.swift */; };
 		44F0A49620047A8A00835154 /* RoutesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A49520047A8A00835154 /* RoutesListViewModel.swift */; };
 		44F0A498200483AA00835154 /* GpxPolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A497200483AA00835154 /* GpxPolyline.swift */; };
@@ -85,6 +83,7 @@
 		44F0A4A320070CD700835154 /* AllListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A4A220070CD700835154 /* AllListViewModel.swift */; };
 		44F0A4A520071A1A00835154 /* GpxPathProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A4A420071A1A00835154 /* GpxPathProvider.swift */; };
 		44F0A4A720071CEC00835154 /* GpxPathProvider+MapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A4A620071CEC00835154 /* GpxPathProvider+MapKit.swift */; };
+		44F0A4A9200732CF00835154 /* GpxBounds+MapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F0A4A8200732CF00835154 /* GpxBounds+MapKit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,10 +165,8 @@
 		44F0A4832002AA7600835154 /* GpxFileEntity+Sorted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GpxFileEntity+Sorted.swift"; sourceTree = "<group>"; };
 		44F0A4852002B49800835154 /* FileDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		44F0A4872002CA1C00835154 /* WaypointsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaypointsListViewModel.swift; sourceTree = "<group>"; };
-		44F0A4892002CAD500835154 /* MapDisplayDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDisplayDelegate.swift; sourceTree = "<group>"; };
 		44F0A48D2002F01100835154 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		44F0A48F2002FEFF00835154 /* WaypointsListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaypointsListViewModelTests.swift; sourceTree = "<group>"; };
-		44F0A49120031AC500835154 /* MockMapDisplayDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMapDisplayDelegate.swift; sourceTree = "<group>"; };
 		44F0A49320046E6B00835154 /* UITableView+EmptyMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+EmptyMessage.swift"; sourceTree = "<group>"; };
 		44F0A49520047A8A00835154 /* RoutesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesListViewModel.swift; sourceTree = "<group>"; };
 		44F0A497200483AA00835154 /* GpxPolyline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpxPolyline.swift; sourceTree = "<group>"; };
@@ -180,6 +177,7 @@
 		44F0A4A220070CD700835154 /* AllListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListViewModel.swift; sourceTree = "<group>"; };
 		44F0A4A420071A1A00835154 /* GpxPathProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpxPathProvider.swift; sourceTree = "<group>"; };
 		44F0A4A620071CEC00835154 /* GpxPathProvider+MapKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GpxPathProvider+MapKit.swift"; sourceTree = "<group>"; };
+		44F0A4A8200732CF00835154 /* GpxBounds+MapKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GpxBounds+MapKit.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,7 +228,6 @@
 				448FA16A1FF5FEEF00E0AB3F /* CombinedFileDetailsViewModel.swift */,
 				44F0A4812001DC7200835154 /* FileDetailsViewModel.swift */,
 				448FA15B1FF569F000E0AB3F /* FileListViewModel.swift */,
-				44F0A4892002CAD500835154 /* MapDisplayDelegate.swift */,
 				44F0A49520047A8A00835154 /* RoutesListViewModel.swift */,
 				44F0A49E2005D92700835154 /* TracksListViewModel.swift */,
 				44F0A4872002CA1C00835154 /* WaypointsListViewModel.swift */,
@@ -348,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				44CBB22B1FF9A40B00A41E7B /* GpxBounds.swift */,
+				44F0A4A8200732CF00835154 /* GpxBounds+MapKit.swift */,
 				44B0806A1FF1D405008C561F /* GpxFile.swift */,
 				44F0A4A420071A1A00835154 /* GpxPathProvider.swift */,
 				44F0A4A620071CEC00835154 /* GpxPathProvider+MapKit.swift */,
@@ -404,7 +402,6 @@
 			isa = PBXGroup;
 			children = (
 				44F0A49C2005D18A00835154 /* MockGpxFileProvider.swift */,
-				44F0A49120031AC500835154 /* MockMapDisplayDelegate.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -532,7 +529,6 @@
 				448FA1571FF4967A00E0AB3F /* GpxTrackSegmentTests.swift in Sources */,
 				448FA1681FF574D100E0AB3F /* FileListViewModelTests.swift in Sources */,
 				448FA1591FF4999500E0AB3F /* GpxTrackTests.swift in Sources */,
-				44F0A49220031AC500835154 /* MockMapDisplayDelegate.swift in Sources */,
 				44F0A4902002FEFF00835154 /* WaypointsListViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -545,6 +541,7 @@
 				448FA1791FF71FF100E0AB3F /* GpxTrackEntity+Initialisers.swift in Sources */,
 				448FA1631FF56CF500E0AB3F /* UILabel+Binding.swift in Sources */,
 				448FA1951FF953F000E0AB3F /* GpxRouteEntity+Initialisers.swift in Sources */,
+				44F0A4A9200732CF00835154 /* GpxBounds+MapKit.swift in Sources */,
 				448FA1751FF6F81400E0AB3F /* GpxWaypoint.swift in Sources */,
 				44F0A49620047A8A00835154 /* RoutesListViewModel.swift in Sources */,
 				44F0A47C2001C81C00835154 /* TracksListViewController.swift in Sources */,
@@ -562,7 +559,6 @@
 				448FA1731FF6BD8600E0AB3F /* Logger.swift in Sources */,
 				44F0A48E2002F01100835154 /* ListViewController.swift in Sources */,
 				44F0A4782001C6BB00835154 /* PageViewController.swift in Sources */,
-				44F0A48A2002CAD500835154 /* MapDisplayDelegate.swift in Sources */,
 				44F0A47E2001C83300835154 /* RoutesListViewController.swift in Sources */,
 				448FA1851FF8082100E0AB3F /* GpxFileEntity+Initialisers.swift in Sources */,
 				44B080861FF36FB7008C561F /* LoadingView.swift in Sources */,

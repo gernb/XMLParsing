@@ -12,15 +12,11 @@ import Foundation
 final class WaypointsListViewModel {
 
     let selectedWaypoints = Bindable<[GpxWaypointEntity]>([])
+    let selectionBounds = Bindable<GpxBounds>(Defaults.bounds)
     private (set) var waypoints: [GpxWaypointEntity] = []
 
-    private weak var delegate: MapDisplayDelegate?
     private var fileEntity: GpxFileEntity?
     private var selectedWaypointIndexes = Set<Int>()
-
-    init(delegate: MapDisplayDelegate) {
-        self.delegate = delegate
-    }
 
     func updateGpxFileEntity(with file: GpxFileEntity) {
         fileEntity = file
@@ -55,21 +51,20 @@ final class WaypointsListViewModel {
 
         Thread.runOnMainThread {
             self.selectedWaypoints.value = waypointList
-            if waypointList.count == 1 {
-                self.delegate?.showMapArea(center: waypointList.first!.coordinate, latitudinalMeters: Constants.oneThousandMetres, longitudinalMeters: Constants.oneThousandMetres)
-            }
-            else if waypointList.count > 1 {
+            if waypointList.count > 0 {
                 let bounds = GpxBounds(forCoordinates: waypointList.map({ $0.coordinate }))
-                self.delegate?.showMapArea(center: bounds.center, latitudeDelta: bounds.latitudeDelta, longitudeDelta: bounds.longitudeDelta)
+                self.selectionBounds.value = bounds
             }
         }
     }
 
     private struct Defaults {
         static let name = NSLocalizedString("<Unknown Name>", comment: "Default name of waypoint if not known")
-    }
-
-    private struct Constants {
-        static let oneThousandMetres: CLLocationDistance = 1000
+        static let bounds: GpxBounds = {
+            let center = CLLocationCoordinate2D(latitude: 37.13284, longitude: -95.78558)
+            let latitudeDelta: CLLocationDegrees = 42
+            let longitudeDelta: CLLocationDegrees = 62
+            return GpxBounds(center: center, latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta)
+        }()
     }
 }
