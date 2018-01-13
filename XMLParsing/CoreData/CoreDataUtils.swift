@@ -40,6 +40,6 @@ final class CoreDataUtils {
     }
 
     private struct Constants {
-        static let sampleFiles = [ "bike ride with family", "Cycling - Winter 2015", "Location", "18 May 2012" ]
+        static let sampleFiles = [ "bike ride with family", "Cycling - Winter 2015", "Location", "18 May 2012", "Multiple Types" ]
     }
 }
